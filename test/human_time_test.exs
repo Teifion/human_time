@@ -4,118 +4,118 @@ defmodule HumanTimeTest do
 
   test "complete cycles" do
     values = [
-      {"every tuesday", [
-        Timex.to_datetime({{2013, 12, 10}, {0, 0, 0}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 17}, {0, 0, 0}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 24}, {0, 0, 0}}, "Europe/London"),
-      ]},
-    
+      # {"every tuesday", [
+      #   Timex.to_datetime({{2013, 12, 10}, {0, 0, 0}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 17}, {0, 0, 0}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 24}, {0, 0, 0}}, "Europe/London"),
+      # ]},
+      
       {"every weekday", [
           Timex.to_datetime({{2013, 12, 5}, {0, 0, 0}}, "Europe/London"),
           Timex.to_datetime({{2013, 12, 6}, {0, 0, 0}}, "Europe/London"),
           Timex.to_datetime({{2013, 12, 9}, {0, 0, 0}}, "Europe/London"),
       ]},
       
-      {"every day", [
-          Timex.to_datetime({{2013, 12, 5}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 6}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 7}, {0, 0, 0}}, "Europe/London"),
-      ]},
+      # {"every day", [
+      #     Timex.to_datetime({{2013, 12, 5}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 6}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 7}, {0, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"weekday at noon", [
-          Timex.to_datetime({{2013, 12, 5}, {12, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 6}, {12, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 9}, {12, 0, 0}}, "Europe/London"),
-      ]},
+      # {"weekday at noon", [
+      #     Timex.to_datetime({{2013, 12, 5}, {12, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 6}, {12, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 9}, {12, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"weekend at 1500", [
-          Timex.to_datetime({{2013, 12, 7}, {15, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 8}, {15, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 14}, {15, 0, 0}}, "Europe/London"),
-      ]},
+      # {"weekend at 1500", [
+      #     Timex.to_datetime({{2013, 12, 7}, {15, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 8}, {15, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 14}, {15, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"every tuesday at 4:20am", [
-          Timex.to_datetime({{2013, 12, 10}, {4, 20, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 17}, {4, 20, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 24}, {4, 20, 0}}, "Europe/London"),
-      ]},
+      # {"every tuesday at 4:20am", [
+      #     Timex.to_datetime({{2013, 12, 10}, {4, 20, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 17}, {4, 20, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 24}, {4, 20, 0}}, "Europe/London"),
+      # ]},
       
-      {"every weekday at 1630", [
-          Timex.to_datetime({{2013, 12, 5}, {16, 30, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 6}, {16, 30, 0}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 9}, {16, 30, 0}}, "Europe/London"),
-      ]},
+      # {"every weekday at 1630", [
+      #     Timex.to_datetime({{2013, 12, 5}, {16, 30, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 6}, {16, 30, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 9}, {16, 30, 0}}, "Europe/London"),
+      # ]},
       
-      {"first monday of every month", [
-          Timex.to_datetime({{2014, 1, 6}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 3}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 3, 3}, {0, 0, 0}}, "Europe/London"),
-      ]},
+      # {"first monday of every month", [
+      #     Timex.to_datetime({{2014, 1, 6}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 3}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 3, 3}, {0, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"second wednesday of every month", [
-          Timex.to_datetime({{2013, 12, 11}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 8}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 12}, {0, 0, 0}}, "Europe/London"),
-      ]},
+      # {"second wednesday of every month", [
+      #     Timex.to_datetime({{2013, 12, 11}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 8}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 12}, {0, 0, 0}}, "Europe/London"),
+      # ]},
 
-      {"last Friday of every month at 9am", [
-          Timex.to_datetime({{2013, 12, 27}, {9, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 31}, {9, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 28}, {9, 0, 0}}, "Europe/London"),
-      ]},
+      # {"last Friday of every month at 9am", [
+      #     Timex.to_datetime({{2013, 12, 27}, {9, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 31}, {9, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 28}, {9, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"15th of every month", [
-          Timex.to_datetime({{2013, 12, 15}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 15}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 15}, {0, 0, 0}}, "Europe/London"),
-      ]},
+      # {"15th of every month", [
+      #     Timex.to_datetime({{2013, 12, 15}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 15}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 15}, {0, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"21 of every month at 1430", [
-          Timex.to_datetime({{2013, 12, 21}, {14, 30, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 21}, {14, 30, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 21}, {14, 30, 0}}, "Europe/London"),
-      ]},
+      # {"21 of every month at 1430", [
+      #     Timex.to_datetime({{2013, 12, 21}, {14, 30, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 21}, {14, 30, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 21}, {14, 30, 0}}, "Europe/London"),
+      # ]},
 
-      {"every Monday at this time", [
-          Timex.to_datetime({{2013, 12, 9}, {6, 20, 5}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 16}, {6, 20, 5}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
-      ]},
+      # {"every Monday at this time", [
+      #     Timex.to_datetime({{2013, 12, 9}, {6, 20, 5}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 16}, {6, 20, 5}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
+      # ]},
 
-      {"every other Sunday at current time", [
-          Timex.to_datetime({{2013, 12, 8}, {6, 20, 5}}, "Europe/London"),
-          Timex.to_datetime({{2013, 12, 22}, {6, 20, 5}}, "Europe/London"),
-      ]},
+      # {"every other Sunday at current time", [
+      #     Timex.to_datetime({{2013, 12, 8}, {6, 20, 5}}, "Europe/London"),
+      #     Timex.to_datetime({{2013, 12, 22}, {6, 20, 5}}, "Europe/London"),
+      # ]},
 
-      {"15th of every month at this time", [
-          Timex.to_datetime({{2013, 12, 15}, {6, 20, 5}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 15}, {6, 20, 5}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 15}, {6, 20, 5}}, "Europe/London"),
-      ]},
+      # {"15th of every month at this time", [
+      #     Timex.to_datetime({{2013, 12, 15}, {6, 20, 5}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 15}, {6, 20, 5}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 15}, {6, 20, 5}}, "Europe/London"),
+      # ]},
 
-      {"end of every month", [
-          Timex.to_datetime({{2013, 12, 31}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 31}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 28}, {0, 0, 0}}, "Europe/London"),
-      ]},
+      # {"end of every month", [
+      #     Timex.to_datetime({{2013, 12, 31}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 31}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 28}, {0, 0, 0}}, "Europe/London"),
+      # ]},
 
-      {"end of every month at 18:00", [
-          Timex.to_datetime({{2013, 12, 31}, {18, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 31}, {18, 0, 0}}, "Europe/London"),
-      ]},
+      # {"end of every month at 18:00", [
+      #     Timex.to_datetime({{2013, 12, 31}, {18, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 31}, {18, 0, 0}}, "Europe/London"),
+      # ]},
       
-      {"first monday after second sunday of month", [
-          Timex.to_datetime({{2013, 12, 9}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 1, 13}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 2, 10}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 3, 10}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 4, 14}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 5, 12}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 6, 9}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 7, 14}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 8, 11}, {0, 0, 0}}, "Europe/London"),
-          Timex.to_datetime({{2014, 9, 15}, {0, 0, 0}}, "Europe/London"),
-      ]},
+      # {"first monday after second sunday of month", [
+      #     Timex.to_datetime({{2013, 12, 9}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 1, 13}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 2, 10}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 3, 10}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 4, 14}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 5, 12}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 6, 9}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 7, 14}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 8, 11}, {0, 0, 0}}, "Europe/London"),
+      #     Timex.to_datetime({{2014, 9, 15}, {0, 0, 0}}, "Europe/London"),
+      # ]},
     ]
     
     
@@ -135,7 +135,8 @@ defmodule HumanTimeTest do
     for {input_string, expected} <- values do
       results = input_string
       |> HumanTime.parse(from: from)
-      |> Enum.take(Enum.count(expected))
+      |> Stream.take(Enum.count(expected))
+      |> Enum.to_list
       
       for {expected_item, result_item} <- Enum.zip([expected, results]) do
         assert expected_item == result_item, message: "Error with: #{input_string}, expected #{expected_item}, got #{result_item}"
