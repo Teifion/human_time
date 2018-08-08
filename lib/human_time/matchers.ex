@@ -1,6 +1,7 @@
 defmodule HumanTime.Matchers do
   alias HumanTime.Consts
   alias HumanTime.Filters
+  alias HumanTime.Mappers
   
   @matchers [
     # {
@@ -29,13 +30,22 @@ defmodule HumanTime.Matchers do
     #   [filters._filter_end_of_month],
     # ),
     {
-      # Filter by day name
+      # Day name
+      # e.g. Every Tuesday
       Consts.create_pattern("(?P<principle>(#ALL_DAY_NAMES#))"),
       [&Filters.weekday/1],
       [],
     },
-  # ),
-  # (
+    
+    
+    {
+      # Set time
+      Consts.create_pattern("at (?P<applicant>#TIME_ALL#)"),
+      [],
+      [&Mappers.apply_time/1],
+    },
+    
+      # (
   #   (
   #     r"at (?P<applicant>%(TIME_ALL)s)" % vars(TimePattern),
   #     [filters._apply_time]

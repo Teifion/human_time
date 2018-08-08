@@ -18,8 +18,8 @@ defmodule HumanTime.Filters do
     end
   end
   
-  def weekday(day) do
-    day_numbers = @day_map[day["principle"]]
+  def weekday(match) do
+    day_numbers = @day_map[match["principle"]]
     
     fn the_date ->
       Timex.weekday(the_date) in day_numbers
