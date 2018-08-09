@@ -17,6 +17,10 @@ def deps do
 end
 ```
 
+## TODO
+ - Handle state in the filter and mappers (to allow for things like "every other")
+ - Opitimise the function calls, some of the filters will iterate through every day in a month for every day in a month
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/human_time](https://hexdocs.pm/human_time).

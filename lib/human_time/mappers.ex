@@ -65,25 +65,21 @@ defmodule HumanTime.Mappers do
         end
       
       :time_term ->
-        # hour, minute = TIME_INDEXES[r.groups()[0]]
-        # return partial(f, hour=hour, minute=minute)      
-        
-        IO.puts ""
-        IO.inspect regex_result
-        IO.puts ""
-        
-        raise "Z"
+        opts = @time_indexes[match["applicant"]]
+        fn the_date ->
+          Timex.set(the_date, opts)
+        end
         
       :time_current ->
         fn the_date -> 
           the_date
         end
         
-      :time_all ->
-        opts = @time_indexes[match["applicant"]]
-        fn the_date ->
-          Timex.set(the_date, opts)
-        end
+      # :time_all ->
+      #   opts = @time_indexes[match["applicant"]]
+      #   fn the_date ->
+      #     Timex.set(the_date, opts)
+      #   end
     end
   end
   

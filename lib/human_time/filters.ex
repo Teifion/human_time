@@ -34,6 +34,8 @@ defmodule HumanTime.Filters do
     end
   end
   
+  # If we catch an after then it means this function was triggered incorrectly
+  def identifier_in_month(%{"after_catch" => "after "}), do: fn _ -> true end
   def identifier_in_month(match) do
     selector  = match["selector"]
     the_day   = match["principle"]
@@ -53,7 +55,27 @@ defmodule HumanTime.Filters do
   end
   
   def identifier_in_month_after(match) do
-    fn the_date -> true end
+    selector1  = match["selector1"]
+    the_day1   = match["principle1"]
+    selector2  = match["selector2"]
+    the_day2   = match["principle2"]
+    
+    fn the_date ->
+      # Calculate an "after date", we won't accept a value prior to this date
+      selector_index = @sector_indexes[selector2]
+      after_date = Enum.at(get_xs_in_month(the_day2, the_date), selector_index)
+      
+      # Get the Xs in a month which are after the after_date
+      xs_in_month = get_xs_in_month(the_day1, the_date)
+      |> Enum.filter(fn d -> Timex.compare(d, after_date) == 1 end)
+      
+      # Calcualte an acceptable day from the Xs
+      selector_index = @sector_indexes[selector1]
+      
+      # Is today the date we find to be acceptable?
+      Enum.at(xs_in_month, selector_index) == the_date |> Timex.to_date
+    end
+    
   end
   
   def day_number_in_month(match) do
@@ -74,6 +96,8 @@ defmodule HumanTime.Filters do
   
   # Used to get all Xs from a month where X is something like tuesday
   defp get_xs_in_month(x, the_date) do
+    the_date = the_date |> Timex.to_date
+    
     # We shift the end of the month by one day to include the last day of the month in our interval
     month_start = Timex.beginning_of_month(the_date)
     month_end = Timex.shift(Timex.end_of_month(the_date), days: 1)

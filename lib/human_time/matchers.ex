@@ -12,14 +12,14 @@ defmodule HumanTime.Matchers do
     {
       # X1 Y1 after X2 Y2 of month
       # first monday after second sunday of month
-      Consts.create_pattern("(?P<selector>#SELECTOR_NAMES#) (?P<principle>#DAY_NAMES#) after (?P<selector2>#SELECTOR_NAMES#) (?P<principle2>#DAY_NAMES#) of month"),
+      Consts.create_pattern("(?P<selector1>#SELECTOR_NAMES#) (?P<principle1>#DAY_NAMES#) after (?P<selector2>#SELECTOR_NAMES#) (?P<principle2>#DAY_NAMES#) of month"),
       [&Filters.identifier_in_month_after/1],
       []
     },
     {
       # X Y of month
       # e.g. first monday of month
-      Consts.create_pattern("(?P<selector>#SELECTOR_NAMES#) (?P<principle>#DAY_NAMES#) of month"),
+      Consts.create_pattern("(?P<after_catch>after )?(?P<selector>#SELECTOR_NAMES#) (?P<principle>#DAY_NAMES#) of month"),
       [&Filters.identifier_in_month/1],
       []
     },
