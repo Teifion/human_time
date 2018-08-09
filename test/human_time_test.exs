@@ -24,11 +24,12 @@ defmodule HumanTimeTest do
       #   Timex.to_datetime({{2013, 12, 7}, {0, 0, 0}}, "Europe/London"),
       # ]},
       
-      {"weekday at noon", [
-        Timex.to_datetime({{2013, 12, 5}, {12, 0, 0}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 6}, {12, 0, 0}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 9}, {12, 0, 0}}, "Europe/London"),
-      ]},
+      # {"weekday at noon", [
+      #   Timex.to_datetime({{2013, 12, 4}, {12, 0, 0}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 5}, {12, 0, 0}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 6}, {12, 0, 0}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 9}, {12, 0, 0}}, "Europe/London"),
+      # ]},
       
       # {"weekend at 1500", [
       #   Timex.to_datetime({{2013, 12, 7}, {15, 0, 0}}, "Europe/London"),
@@ -43,6 +44,7 @@ defmodule HumanTimeTest do
       # ]},
       
       # {"every weekday at 1630", [
+      #   Timex.to_datetime({{2013, 12, 4}, {16, 30, 0}}, "Europe/London"),
       #   Timex.to_datetime({{2013, 12, 5}, {16, 30, 0}}, "Europe/London"),
       #   Timex.to_datetime({{2013, 12, 6}, {16, 30, 0}}, "Europe/London"),
       #   Timex.to_datetime({{2013, 12, 9}, {16, 30, 0}}, "Europe/London"),
@@ -54,6 +56,7 @@ defmodule HumanTimeTest do
       #   Timex.to_datetime({{2014, 3, 3}, {0, 0, 0}}, "Europe/London"),
       # ]},
       
+      # TODO, check this, it passed but I didn't think I'd enabled the filter for it
       # {"second wednesday of every month", [
       #   Timex.to_datetime({{2013, 12, 11}, {0, 0, 0}}, "Europe/London"),
       #   Timex.to_datetime({{2014, 1, 8}, {0, 0, 0}}, "Europe/London"),
@@ -84,6 +87,7 @@ defmodule HumanTimeTest do
       #   Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
       # ]},
 
+      # TODO, not sure how to handle everyother
       # {"every other Sunday at current time", [
       #   Timex.to_datetime({{2013, 12, 8}, {6, 20, 5}}, "Europe/London"),
       #   Timex.to_datetime({{2013, 12, 22}, {6, 20, 5}}, "Europe/London"),
@@ -106,18 +110,18 @@ defmodule HumanTimeTest do
       #   Timex.to_datetime({{2014, 1, 31}, {18, 0, 0}}, "Europe/London"),
       # ]},
       
-      # {"first monday after second sunday of month", [
-      #   Timex.to_datetime({{2013, 12, 9}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 1, 13}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 2, 10}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 3, 10}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 4, 14}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 5, 12}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 6, 9}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 7, 14}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 8, 11}, {0, 0, 0}}, "Europe/London"),
-      #   Timex.to_datetime({{2014, 9, 15}, {0, 0, 0}}, "Europe/London"),
-      # ]},
+      {"first monday after second sunday of month", [
+        Timex.to_datetime({{2013, 12, 9}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 1, 13}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 2, 10}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 3, 10}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 4, 14}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 5, 12}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 6, 9}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 7, 14}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 8, 11}, {0, 0, 0}}, "Europe/London"),
+        Timex.to_datetime({{2014, 9, 15}, {0, 0, 0}}, "Europe/London"),
+      ]},
     ]
     
     
@@ -133,12 +137,15 @@ defmodule HumanTimeTest do
     # 29 30 31
     
     from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
+    until = Timex.shift(from, years: 1)
     
     for {input_string, expected} <- values do
       results = input_string
-      |> HumanTime.parse(from: from)
+      |> HumanTime.parse(from: from, until: until)
       |> Stream.take(Enum.count(expected))
       |> Enum.to_list
+      
+      assert Enum.count(results) == Enum.count(expected), message: "Error with: #{input_string}, different number of results vs expected, expected #{Enum.count(expected)}, got #{Enum.count(results)}"
       
       for {expected_item, result_item} <- Enum.zip([expected, results]) do
         assert expected_item == result_item, message: "Error with: #{input_string}, expected #{expected_item}, got #{result_item}"

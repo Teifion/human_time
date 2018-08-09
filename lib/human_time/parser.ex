@@ -14,7 +14,6 @@ defmodule HumanTime.Parser do
     end)
     |> Enum.filter(fn {_, _, _, regex_result} -> regex_result != nil end)
     
-    
     # Build filter function
     filter_function = first_pass
     |> Enum.map(fn {_pattern, filter_functions, _, regex_result} ->
@@ -23,7 +22,6 @@ defmodule HumanTime.Parser do
     end)
     |> List.flatten
     |> compose_filters
-    
     
     # Build mapper function
     mapper_function = first_pass

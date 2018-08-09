@@ -6,29 +6,36 @@ defmodule HumanTime.Matchers do
   @matchers [
     # {
     #   Consts.create_pattern("other (#ALL_DAY_NAMES#)"),
-    #   # [filters._filter_everyother, filters._filter_weekday]
+    #   # [&Filters._filter_everyother, &Filters._filter_weekday]
     #   []
     # },
-    # (
-    #   # first monday after second sunday of month
-    #   r"(?P<selector>%(SELECTOR_NAMES)s) (?P<principle>%(DAY_NAMES)s) after (?P<selector2>%(SELECTOR_NAMES)s) (?P<principle2>%(DAY_NAMES)s) of month" % vars(DatePattern),
-    #   [filters._filter_identifier_in_month_after]
-    # ),
-    # (
-    #   # first monday of month
-    #   r"(?P<selector>%(SELECTOR_NAMES)s) (?P<principle>%(DAY_NAMES)s) of month" % vars(DatePattern),
-    #   [filters._filter_identifier_in_month],
-    # ),
-    # (
-    #   # 1st of month
-    #   r"(?P<selector>[0-9]{1,2})(?:st|nd|rd|th)? of (?P<principle>month)",
-    #   [filters._filter_day_number_in_month],
-    # ),
-    # (
-    #   # end of month
-    #   r"end of month",
-    #   [filters._filter_end_of_month],
-    # ),
+    {
+      # X1 Y1 after X2 Y2 of month
+      # first monday after second sunday of month
+      Consts.create_pattern("(?P<selector>#SELECTOR_NAMES#) (?P<principle>#DAY_NAMES#) after (?P<selector2>#SELECTOR_NAMES#) (?P<principle2>#DAY_NAMES#) of month"),
+      [&Filters.identifier_in_month_after/1],
+      []
+    },
+    {
+      # X Y of month
+      # e.g. first monday of month
+      Consts.create_pattern("(?P<selector>#SELECTOR_NAMES#) (?P<principle>#DAY_NAMES#) of month"),
+      [&Filters.identifier_in_month/1],
+      []
+    },
+    {
+      # X of month
+      # e.g. 2nd of month
+      Consts.create_pattern("(?P<selector>[0-9]{1,2})(?:st|nd|rd|th)? of (?P<principle>month)"),
+      [&Filters.day_number_in_month/1],
+      []
+    },
+    {
+      # end of month
+      Consts.create_pattern("end of month"),
+      [&Filters.end_of_month/1],
+      []
+    },
     {
       # Day name
       # e.g. Every Tuesday
@@ -44,15 +51,21 @@ defmodule HumanTime.Matchers do
       [],
       [&Mappers.apply_time/1],
     },
+    # {
+    #   # Cut time component
+    #   Consts.create_pattern("^((?!at (?P<applicant>#TIME_ALL#))).*$"),
+    #   [],
+    #   [&Mappers.cut_time/1],
+    # },
     
       # (
   #   (
   #     r"at (?P<applicant>%(TIME_ALL)s)" % vars(TimePattern),
-  #     [filters._apply_time]
+  #     [&Filters._apply_time]
   #   ),
   #   (
   #       r"^((?!at (?P<applicant>%(TIME_ALL)s)).)*$" % vars(TimePattern),
-  #       [filters._cut_time]
+  #       [&Filters._cut_time]
   #   )
   ]
   

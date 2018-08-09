@@ -15,6 +15,9 @@ defmodule HumanTime do
   @spec parse(charlist, list) :: Stream.t
   def parse(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
+    until = opts[:until]
+    
+    while_function = Generators.while_function(until)
     generator_function = opts[:generator] || &Generators.days/1
     
     {filter_function, mapper_function} = timestring
@@ -22,6 +25,7 @@ defmodule HumanTime do
     |> Parser.build_functions
     
     Stream.iterate(from, generator_function)
+    |> Stream.take_while(while_function)
     |> Stream.filter(filter_function)
     |> Stream.map(mapper_function)
   end
@@ -32,10 +36,10 @@ defmodule HumanTime do
   # to watch for case in the regex
   defp clean(timestring) do
     timestring
-    |> String.replace("  ", " ")
-    |> String.replace("  ", " ")
-    |> String.replace("  ", " ")
     |> String.replace("every", "")
+    |> String.replace("  ", " ")
+    |> String.replace("  ", " ")
+    |> String.replace("  ", " ")
     |> String.trim
     |> String.downcase
   end
