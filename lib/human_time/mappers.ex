@@ -1,5 +1,6 @@
 defmodule HumanTime.Mappers do
   alias HumanTime.Consts
+  alias HumanTime.State
   
   @time_indexes %{
     "noon"    => [hour: 12, minute: 0, second: 0],
@@ -74,30 +75,23 @@ defmodule HumanTime.Mappers do
         fn the_date -> 
           the_date
         end
-        
-      # :time_all ->
-      #   opts = @time_indexes[match["applicant"]]
-      #   fn the_date ->
-      #     Timex.set(the_date, opts)
-      #   end
     end
   end
   
-  # def cut_time(match) do
-  #   IO.puts ""
-  #   IO.inspect match
-  #   IO.puts ""
+  def every_other(_) do
+    {:ok, state_pid} = State.start_link(true)
     
-  #   fn the_date ->
-  #     # Timex.set(the_date, opts)
+    fn the_date ->
+      flag = State.get(state_pid)
+      State.set(state_pid, not flag)
       
-  #     IO.puts ""
-  #     IO.inspect the_date
-  #     IO.puts ""
-      
-  #     the_date
-  #   end
-  # end
+      if flag do
+        the_date
+      else
+        nil
+      end
+    end
+  end
   
   defp parse_int(""), do: 0
   defp parse_int(s), do: String.to_integer s

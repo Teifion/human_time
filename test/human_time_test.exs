@@ -90,11 +90,12 @@ defmodule HumanTimeTest do
         Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
       ]},
 
-      # TODO, not sure how to handle everyother
-      # {"every other Sunday at current time", [
-      #   Timex.to_datetime({{2013, 12, 8}, {6, 20, 5}}, "Europe/London"),
-      #   Timex.to_datetime({{2013, 12, 22}, {6, 20, 5}}, "Europe/London"),
-      # ]},
+      {"every other Sunday at current time", [
+        Timex.to_datetime({{2013, 12, 8}, {6, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 22}, {6, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 1, 5}, {6, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 1, 19}, {6, 20, 5}}, "Europe/London"),
+      ]},
 
       {"15th of every month at this time", [
         Timex.to_datetime({{2013, 12, 15}, {6, 20, 5}}, "Europe/London"),

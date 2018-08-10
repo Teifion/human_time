@@ -27,7 +27,9 @@ defmodule HumanTime do
     Stream.iterate(from, generator_function)
     |> Stream.take_while(while_function)
     |> Stream.filter(filter_function)
+    # |> Stream.map_reduce(mapper_function)
     |> Stream.map(mapper_function)
+    |> Stream.filter(&(&1 != nil))
   end
   
   # Removes double-spacing from the string, removes the word
