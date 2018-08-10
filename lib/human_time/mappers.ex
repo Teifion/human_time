@@ -6,6 +6,7 @@ defmodule HumanTime.Mappers do
     "noon"    => [hour: 12, minute: 0, second: 0],
     "midday"  => [hour: 12, minute: 0, second: 0],
     "morning" => [hour: 8, minute: 0, second: 0],
+    "midnight" => [hour: 0, minute: 0, second: 0],
   }
 
   # @sector_indexes %{
@@ -16,11 +17,13 @@ defmodule HumanTime.Mappers do
   #   "last"   => -1,
   # }
   
-  def remove_time(_) do
-    fn value ->
-      Timex.set(value, [hour: 0, minute: 0, second: 0])
-    end
-  end
+  # def remove_time(%{"at_catch" => " at "}), do: fn value -> value end
+  # def remove_time(v) do
+  #   fn value ->
+  #     value
+  #     |> Timex.set([hour: 0, minute: 0, second: 0])
+  #   end
+  # end
   
   defp match_time(the_time) do
     time_term    = Regex.named_captures(Consts.compiled_time_term(), the_time)
@@ -34,7 +37,7 @@ defmodule HumanTime.Mappers do
       time_24h -> {:time_24h, time_24h}
       time_term -> {:time_term, time_term}
       time_current -> {:time_current, time_current}
-      time_all -> {:time_all, time_all}
+      # time_all -> {:time_all, time_all}
     end
   end
   

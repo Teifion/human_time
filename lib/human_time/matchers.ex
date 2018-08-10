@@ -5,11 +5,6 @@ defmodule HumanTime.Matchers do
   
   @matchers [
     {
-      Consts.create_pattern("other .*"),
-      [],
-      [&Mappers.every_other/1]
-    },
-    {
       # X1 Y1 after X2 Y2 of month
       # first monday after second sunday of month
       Consts.create_pattern("(?P<selector1>#SELECTOR_NAMES#) (?P<principle1>#DAY_NAMES#) after (?P<selector2>#SELECTOR_NAMES#) (?P<principle2>#DAY_NAMES#) of month"),
@@ -45,12 +40,27 @@ defmodule HumanTime.Matchers do
     },
     
     
+    # Adding a time component
     {
-      # Set time
       Consts.create_pattern("at (?P<applicant>#TIME_ALL#)"),
       [],
       [&Mappers.apply_time/1],
     },
+    
+    # No time component
+    # {
+    #   Consts.create_pattern("^(.+)(?<!at) (#TIME_ALL#)$") |> IO.inspect,
+    #   [],
+    #   [&Mappers.remove_time/1],
+    # },
+    
+    # Every other, this needs to be at the end of the list or it may 
+    {
+      Consts.create_pattern("other .*"),
+      [],
+      [&Mappers.every_other/1]
+    },
+    
   ]
   
   def get_matchers(), do: @matchers

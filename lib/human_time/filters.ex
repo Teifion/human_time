@@ -20,11 +20,11 @@ defmodule HumanTime.Filters do
     "last"   => -1,
   }
   
-  def always_true(_) do
-    fn _ ->
-      true
-    end
-  end
+  # def always_true(_) do
+  #   fn _ ->
+  #     true
+  #   end
+  # end
   
   def weekday(match) do
     day_numbers = @day_map[match["principle"]]

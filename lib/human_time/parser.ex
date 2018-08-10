@@ -47,9 +47,9 @@ defmodule HumanTime.Parser do
   end
   
   # If no mapper functions, we want to set the out put to just a date
-  def compose_mappers([]) do
-    compose_mappers([HumanTime.Mappers.remove_time(nil)])
-  end
+  # def compose_mappers([]) do
+  #   compose_mappers([HumanTime.Mappers.remove_time(nil)])
+  # end
   def compose_mappers(mapper_functions) do
     fn value -> 
       mapper_functions

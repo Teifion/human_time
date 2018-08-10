@@ -3,9 +3,9 @@ defmodule HumanTime.Consts do
   @selector_names "first|1st|second|2nd|third|3rd|fourth|4th|last"
   @day_names "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
   @all_day_names @day_names <> "|weekday|day|weekend"
-  @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
+  # @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
   
-  @time_term "(noon|midday|morning)"
+  @time_term "(midnight|noon|midday|morning)"
   @time_current "(this|current) time"
   @time_12h "(?P<hour12>[0-9]|1[0-2])(:(?P<minute12>[0-5][0-9]))?(?P<period>am|pm)"
   @time_24h "(?P<hour24>[01]?[0-9]|2[0-3]):?(?P<minute24>[0-5][0-9])"
