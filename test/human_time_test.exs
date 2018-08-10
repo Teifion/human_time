@@ -8,10 +8,10 @@ defmodule HumanTimeTest do
     from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
     until = Timex.shift(from, years: 1)
     
-    stream1 = "every other tuesday"
+    stream1 = "every other tuesday at midnight"
     |> HumanTime.parse(from: from, until: until)
     
-    stream2 = "every other wednesday"
+    stream2 = "every other wednesday at midnight"
     |> HumanTime.parse(from: from, until: until)
     |> Stream.take(3)
     
