@@ -18,9 +18,8 @@ defmodule HumanTime do
     until = opts[:until]
     
     while_function = Generators.while_function(until)
-    generator_function = opts[:generator] || &Generators.days/1
     
-    {filter_function, mapper_function} = timestring
+    {generator_function, filter_function, mapper_function} = timestring
     |> clean
     |> Parser.build_functions
     

@@ -7,16 +7,32 @@ defmodule HumanTime.Parser do
   """
   def build_functions(timestring) do
     first_pass = Matchers.get_matchers()
-    |> Enum.map(fn {pattern, filter_functions, mapper_functions} ->
+    |> Enum.map(fn {pattern, generator, filter_functions, mapper_functions} ->
       regex_result = Regex.named_captures(pattern, timestring)
       
-      {pattern, filter_functions, mapper_functions, regex_result}
+      {pattern, generator, filter_functions, mapper_functions, regex_result}
     end)
-    |> Enum.filter(fn {_, _, _, regex_result} -> regex_result != nil end)
+    |> Enum.filter(fn {_, _, _, _, regex_result} -> regex_result != nil end)
+    
+    # Build generator
+    generator_function = first_pass
+    |> Enum.map(fn {_pattern, generator, filter_functions, _, regex_result} ->
+      generator
+    end)
+    |> Enum.filter(&(&1 != nil))
+    |> Enum.uniq
+    |> hd
+    
+    # Temporary code to debug if there are the correct generator functions
+    # generator_function = if Enum.count(generator_function) == 1 do
+    #   hd(generator_function)
+    # else
+    #   raise ""
+    # end
     
     # Build filter function
     filter_function = first_pass
-    |> Enum.map(fn {_pattern, filter_functions, _, regex_result} ->
+    |> Enum.map(fn {_pattern, _, filter_functions, _, regex_result} ->
       filter_functions
       |> Enum.map(fn f -> f.(regex_result) end)
     end)
@@ -25,14 +41,14 @@ defmodule HumanTime.Parser do
     
     # Build mapper function
     mapper_function = first_pass
-    |> Enum.map(fn {_pattern, _, mapper_functions, regex_result} ->
+    |> Enum.map(fn {_pattern, _, _, mapper_functions, regex_result} ->
       mapper_functions
       |> Enum.map(fn f -> f.(regex_result) end)
     end)
     |> List.flatten
     |> compose_mappers
     
-    {filter_function, mapper_function}
+    {generator_function, filter_function, mapper_function}
   end
   
   # def compose_filters([]) do
