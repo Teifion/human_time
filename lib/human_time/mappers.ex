@@ -30,7 +30,7 @@ defmodule HumanTime.Mappers do
     time_current = Regex.named_captures(Consts.compiled_time_current(), the_time)
     time_12h     = Regex.named_captures(Consts.compiled_time_12h(), the_time)
     time_24h     = Regex.named_captures(Consts.compiled_time_24h(), the_time)
-    time_all     = Regex.named_captures(Consts.compiled_time_all(), the_time)
+    # time_all     = Regex.named_captures(Consts.compiled_time_all(), the_time)
     
     cond do
       time_12h -> {:time_12h, time_12h}
