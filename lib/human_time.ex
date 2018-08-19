@@ -12,7 +12,7 @@ defmodule HumanTime do
     @param start_time: initial time
   
   """
-  @spec parse(charlist, list) :: Stream.t
+  @spec parse(String.t, list) :: map
   def parse(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
     until = opts[:until]
@@ -35,6 +35,7 @@ defmodule HumanTime do
   # "every" which  is not needed to match against.
   # Also downcases the string as we don't want it to have
   # to watch for case in the regex
+  @spec clean(String.t) :: String.t
   defp clean(timestring) do
     timestring
     |> String.replace("every", "")

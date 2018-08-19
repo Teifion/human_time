@@ -71,6 +71,13 @@ defmodule HumanTimeTest do
   
   test "complete cycles" do
     values = [
+      # {"every 5 seconds", [
+      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 10}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 15}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 20}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 25}}, "Europe/London"),
+      # ]},
+      
       {"every tuesday at midnight", [
         Timex.to_datetime({{2013, 12, 10}, {0, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 17}, {0, 0, 0}}, "Europe/London"),

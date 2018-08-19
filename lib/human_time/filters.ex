@@ -26,6 +26,7 @@ defmodule HumanTime.Filters do
   #   end
   # end
   
+  @spec weekday(map) :: fun
   def weekday(match) do
     day_numbers = @day_map[match["principle"]]
     
@@ -35,6 +36,7 @@ defmodule HumanTime.Filters do
   end
   
   # If we catch an after then it means this function was triggered incorrectly
+  @spec identifier_in_month(map) :: fun
   def identifier_in_month(%{"after_catch" => "after "}), do: fn _ -> true end
   def identifier_in_month(match) do
     selector  = match["selector"]
@@ -54,6 +56,7 @@ defmodule HumanTime.Filters do
     end
   end
   
+  @spec identifier_in_month_after(map) :: fun
   def identifier_in_month_after(match) do
     selector1  = match["selector1"]
     the_day1   = match["principle1"]
@@ -78,6 +81,7 @@ defmodule HumanTime.Filters do
     
   end
   
+  @spec day_number_in_month(map) :: fun
   def day_number_in_month(match) do
     day_number = match["selector"]
     |> String.to_integer
@@ -87,6 +91,7 @@ defmodule HumanTime.Filters do
     end
   end
   
+  @spec end_of_month(map) :: fun
   def end_of_month(_match) do
     fn the_date ->
       Timex.to_date(the_date) == Timex.end_of_month(the_date) |> Timex.to_date
@@ -95,6 +100,7 @@ defmodule HumanTime.Filters do
   
   
   # Used to get all Xs from a month where X is something like tuesday
+  @spec get_xs_in_month(String.t, DateTime.t | Date.t) :: list
   defp get_xs_in_month(x, the_date) do
     the_date = the_date |> Timex.to_date
     

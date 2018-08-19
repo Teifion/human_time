@@ -18,6 +18,7 @@ defmodule HumanTime.Consts do
   @time_24h_compiled @time_24h |> Regex.compile!
   @time_all_compiled @time_all |> Regex.compile!
   
+  @spec create_pattern(String.t) :: Regex.t
   def create_pattern(patten_string) do
     patten_string
     |> String.replace("#SELECTOR_NAMES#", @selector_names)

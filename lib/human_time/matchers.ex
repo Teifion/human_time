@@ -71,5 +71,6 @@ defmodule HumanTime.Matchers do
     
   ]
   
+  @spec get_matchers() :: list
   def get_matchers(), do: @matchers
 end

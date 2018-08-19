@@ -25,6 +25,7 @@ defmodule HumanTime.Mappers do
   #   end
   # end
   
+  @spec match_time(String.t) :: {atom, Regex.t}
   defp match_time(the_time) do
     time_term    = Regex.named_captures(Consts.compiled_time_term(), the_time)
     time_current = Regex.named_captures(Consts.compiled_time_current(), the_time)
@@ -41,6 +42,7 @@ defmodule HumanTime.Mappers do
     end
   end
   
+  @spec apply_time(map) :: fun
   def apply_time(match) do
     {time_type, regex_result} = match["applicant"]
     |> match_time
@@ -81,6 +83,7 @@ defmodule HumanTime.Mappers do
     end
   end
   
+  @spec every_other(map) :: fun
   def every_other(_) do
     {:ok, state_pid} = State.start_link(true)
     
@@ -96,6 +99,7 @@ defmodule HumanTime.Mappers do
     end
   end
   
+  @spec parse_int(String.t) :: integer
   defp parse_int(""), do: 0
   defp parse_int(s), do: String.to_integer s
 end
