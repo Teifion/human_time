@@ -1,25 +1,44 @@
 defmodule HumanTime.MixProject do
   use Mix.Project
-
+  
+  @version "0.1.0"
+  
   def project do
     [
       app: :human_time,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.6",
+      description: description(),
+      package: package(),
+      deps: deps(),
       test_coverage: [tool: ExCoveralls],
-      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-      start_permanent: Mix.env() == :prod,
-      deps: deps()
+      preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
+  end
+  
+  defp description do
+    """
+    Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "every friday at 2pm" and convert it into a sequence of date times as allowed by the string.
+    """
   end
 
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :timex]
     ]
   end
-
+  
+  defp package do
+    [ files: ["lib", "mix.exs", "README.md", "LICENSE.md"],
+      maintainers: ["Teifion Jordan"],
+      licenses: ["MIT"],
+      links: %{ 
+        "Changelog": "https://github.com/teifion/humantime/blob/master/CHANGELOG.md", 
+        "GitHub": "https://github.com/teifion/humantime"
+    }]
+  end
+  
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [

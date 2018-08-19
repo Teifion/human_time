@@ -1,7 +1,9 @@
 # HumanTime
-Adapted from my [human_time library for Python](https://github.com/Teifion/human_time_py) but for Elixir.
+[![Coverage Status](https://coveralls.io/repos/github/Teifion/human_time/badge.svg?branch=master)](https://coveralls.io/github/Teifion/human_time?branch=master)
 
-The purpose of this library is to take written date/time such as "every other tuesday", "every weekday", "every friday at 2pm" etc, and convert it into a sequence of datetimes fitting the string.
+Adapted from my [human_time library for Python](https://github.com/Teifion/human_time_py) but for Elixir. Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "every friday at 2pm" and convert it into a sequence of date times as allowed by the string.
+
+This is my first attempt at putting a package onto hex so please feel free to give input on what should be changed but also be mindful I'm unlikely to have experience doing everything suggested.
 
 ## Usage
 Human time has only a single function, `parse`. It only requires a string detailing a sequence of date or datetimes.
@@ -23,13 +25,9 @@ If a time is not part of the string, datetimes will be outputted as the current 
 ### Options
 from: Dictates the date the sequence will begin from (defaults to starting from now)
 until: Dictates the date the sequence will end at (defaults to never finish)
-generator: The step function the sequence will use (defaults to days)
 
 ## Installation
-**Currently not in Hex**
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `human_time` to your list of dependencies in `mix.exs`:
+To add Human Time to your project, you only need to add it as a dependency and start it as an application in your mix.exs file.
 
 ```elixir
 def deps do
@@ -37,14 +35,20 @@ def deps do
     {:human_time, "~> 0.1.0"}
   ]
 end
+
+defp application do
+  [applications: [:human_time]]
+end
 ```
 
-## TODO
+## Roadmap / TODO
+ - Add blocker match in, if a matcher matches on a block it won't trigger, currently using a workaround for some of them
  - Handle state in the filter and mappers (to allow for things like "every other")
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
  - Enable other generators with strings such as "every other second"
+ - Documentation
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/human_time](https://hexdocs.pm/human_time).
 
+## License
+
+This software is licensed under [the MIT license](LICENSE.md).
