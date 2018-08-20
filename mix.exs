@@ -36,7 +36,7 @@ defmodule HumanTime.MixProject do
       main: "HumanTime",
       formatter_opts: [gfm: true],
       source_ref: @version,
-      source_url: "https://github.com/teifion/humantime",
+      source_url: "https://github.com/teifion/human_time",
       extras: []
     ]
 end
@@ -46,8 +46,8 @@ end
       maintainers: ["Teifion Jordan"],
       licenses: ["MIT"],
       links: %{ 
-        "Changelog": "https://github.com/teifion/humantime/blob/master/CHANGELOG.md", 
-        "GitHub": "https://github.com/teifion/humantime"
+        "Changelog": "https://github.com/teifion/human_time/blob/master/CHANGELOG.md", 
+        "GitHub": "https://github.com/teifion/human_time"
     }]
   end
   
