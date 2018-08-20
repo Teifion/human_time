@@ -11,6 +11,7 @@ defmodule HumanTime.MixProject do
       description: description(),
       package: package(),
       deps: deps(),
+      docs: docs(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test]
     ]
@@ -29,6 +30,17 @@ defmodule HumanTime.MixProject do
     ]
   end
   
+  defp docs do
+    [
+      # main: "getting-started",
+      main: "HumanTime",
+      formatter_opts: [gfm: true],
+      source_ref: @version,
+      source_url: "https://github.com/teifion/humantime",
+      extras: []
+    ]
+end
+  
   defp package do
     [ files: ["lib", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Teifion Jordan"],
@@ -45,6 +57,7 @@ defmodule HumanTime.MixProject do
       {:timex, "~> 3.1"},
       {:excoveralls, "~> 0.8", only: :test},
       {:dialyxir, "~> 0.4", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:credo, "~> 0.5", only: [:dev, :test]},
     ]
   end

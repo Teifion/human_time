@@ -1,4 +1,6 @@
 defmodule HumanTime.Consts do
+  @moduledoc false
+  
   # Regex.compile
   @selector_names "first|1st|second|2nd|third|3rd|fourth|4th|last"
   @day_names "monday|tuesday|wednesday|thursday|friday|saturday|sunday"
@@ -18,7 +20,7 @@ defmodule HumanTime.Consts do
   @time_24h_compiled @time_24h |> Regex.compile!
   @time_all_compiled @time_all |> Regex.compile!
   
-  @spec create_pattern(String.t) :: Regex.t
+  @spec create_pattern(String.t()) :: Regex.t
   def create_pattern(patten_string) do
     patten_string
     |> String.replace("#SELECTOR_NAMES#", @selector_names)

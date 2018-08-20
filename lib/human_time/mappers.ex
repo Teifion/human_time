@@ -1,4 +1,6 @@
 defmodule HumanTime.Mappers do
+  @moduledoc false
+  
   alias HumanTime.Consts
   alias HumanTime.State
   
@@ -25,7 +27,7 @@ defmodule HumanTime.Mappers do
   #   end
   # end
   
-  @spec match_time(String.t) :: {atom, Regex.t}
+  @spec match_time(String.t()) :: {atom, Regex.t}
   defp match_time(the_time) do
     time_term    = Regex.named_captures(Consts.compiled_time_term(), the_time)
     time_current = Regex.named_captures(Consts.compiled_time_current(), the_time)
@@ -99,7 +101,7 @@ defmodule HumanTime.Mappers do
     end
   end
   
-  @spec parse_int(String.t) :: integer
+  @spec parse_int(String.t()) :: integer
   defp parse_int(""), do: 0
   defp parse_int(s), do: String.to_integer s
 end

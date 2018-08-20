@@ -1,4 +1,5 @@
 defmodule HumanTime.Generators do
+  @moduledoc false
   
   @spec seconds(DateTime.t) :: DateTime.t
   def seconds(now), do: Timex.shift(now, seconds: 1)

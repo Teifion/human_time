@@ -1,4 +1,6 @@
 defmodule HumanTime.Matchers do
+  @moduledoc false
+  
   alias HumanTime.Consts
   alias HumanTime.Filters
   alias HumanTime.Mappers

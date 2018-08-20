@@ -1,18 +1,31 @@
 defmodule HumanTime do
   @moduledoc """
-  Documentation for HumanTime.
+  Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "every friday at 2pm" and convert it into a sequence of date times as allowed by the string.
   """
   
   alias HumanTime.Generators
   alias HumanTime.Parser
   
   @doc """
-  Returns datetime generator with applied filters
-    @param timestring: human time expression
-    @param start_time: initial time
+  Generates a stream of datetimes for the string given.
   
+  ## Options
+  `from` The datetime from when the sequence will be generated, defaults to the current time.
+  
+  `until` The datetime when the sequence will be terminated, defaults to nil. When nil the sequence will never be terminated.
+  
+  ## Example
+      HumanTime.parse("Every wednesday at 1530")
+      |> Stream.take(3)
+      |> Enum.to_list
+      
+      #=> [
+      #=>   #DateTime<2018-08-15 15:30:00.848218Z>,
+      #=>   #DateTime<2018-08-22 15:30:00.848218Z>,
+      #=>   #DateTime<2018-08-29 15:30:00.848218Z>
+      #=> ]
   """
-  @spec parse(String.t, list) :: map
+  @spec parse(String.t(), [term]) :: Enumerable.t
   def parse(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
     until = opts[:until]
@@ -35,7 +48,8 @@ defmodule HumanTime do
   # "every" which  is not needed to match against.
   # Also downcases the string as we don't want it to have
   # to watch for case in the regex
-  @spec clean(String.t) :: String.t
+  @doc false
+  @spec clean(String.t()) :: String.t()
   defp clean(timestring) do
     timestring
     |> String.replace("every", "")

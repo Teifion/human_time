@@ -1,11 +1,13 @@
 defmodule HumanTime.Parser do
+  @moduledoc false
+  
   alias HumanTime.Matchers
   
   @doc """
   Run the timestring through each filter pattern
   With matches, create a set of filter functions to test
   """
-  @spec build_functions(String.t) :: {fun, fun, fun}
+  @spec build_functions(String.t()) :: {fun, fun, fun}
   def build_functions(timestring) do
     first_pass = Matchers.get_matchers()
     |> Enum.map(fn {pattern, generator, filter_functions, mapper_functions} ->

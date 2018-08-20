@@ -43,8 +43,9 @@ end
 
 ## Roadmap / TODO
  - Add blocker match in, if a matcher matches on a block it won't trigger, currently using a workaround for some of them
- - Handle state in the filter and mappers (to allow for things like "every other")
+ - Better handle state in the filter and mappers (to allow for things like "every other")
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
+ - Add time jumps such as "25th minute of every other hour"
  - Enable other generators with strings such as "every other second"
  - Documentation
 

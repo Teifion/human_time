@@ -1,4 +1,6 @@
 defmodule HumanTime.Filters do
+  @moduledoc false
+  
   @day_map %{
     "monday"    => [1],
     "tuesday"   => [2],
@@ -100,7 +102,7 @@ defmodule HumanTime.Filters do
   
   
   # Used to get all Xs from a month where X is something like tuesday
-  @spec get_xs_in_month(String.t, DateTime.t | Date.t) :: list
+  @spec get_xs_in_month(String.t(), DateTime.t | Date.t) :: list
   defp get_xs_in_month(x, the_date) do
     the_date = the_date |> Timex.to_date
     

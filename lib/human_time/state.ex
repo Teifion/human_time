@@ -1,4 +1,6 @@
 defmodule HumanTime.State do
+  @moduledoc false
+  
   use GenServer
   
   @spec start_link(any) :: {:error, any} | {:ok, pid}
