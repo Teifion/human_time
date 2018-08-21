@@ -1,6 +1,6 @@
 defmodule HumanTime do
   @moduledoc """
-  Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "every friday at 2pm" and convert it into a sequence of date times as allowed by the string.
+  Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "next friday at 2pm" and convert it into a one or a sequence of date times as allowed by the string.
   """
   
   alias HumanTime.Generators
@@ -15,7 +15,7 @@ defmodule HumanTime do
   `until` The datetime when the sequence will be terminated, defaults to nil. When nil the sequence will never be terminated.
   
   ## Example
-      HumanTime.parse("Every wednesday at 1530")
+      HumanTime.parse_repeating("Every wednesday at 1530")
       |> Stream.take(3)
       |> Enum.to_list
       
@@ -25,8 +25,8 @@ defmodule HumanTime do
       #=>   #DateTime<2018-08-29 15:30:00.848218Z>
       #=> ]
   """
-  @spec parse(String.t(), [term]) :: Enumerable.t
-  def parse(timestring, opts \\ []) do
+  @spec parse_repeating(String.t(), [term]) :: Enumerable.t
+  def parse_repeating(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
     until = opts[:until]
     
@@ -42,6 +42,18 @@ defmodule HumanTime do
     # |> Stream.map_reduce(mapper_function)
     |> Stream.map(mapper_function)
     |> Stream.filter(&(&1 != nil))
+  end
+  
+  @spec parse_date(String.t(), [term]) :: Date
+  def parse_date(timestring, opts \\ []) do
+    timestring
+    |> parse_datetime(opts)
+    |> Timex.to_date
+  end
+  
+  @spec parse_datetime(String.t(), [term]) :: Datetime
+  def parse_datetime(timestring, opts \\ []) do
+    
   end
   
   # Removes double-spacing from the string, removes the word

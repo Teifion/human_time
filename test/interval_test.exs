@@ -1,4 +1,4 @@
-defmodule HumanTimeTest do
+defmodule HumanTime.IntervalTest do
   use ExUnit.Case
   doctest HumanTime
   
