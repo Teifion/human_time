@@ -56,7 +56,8 @@ defmodule HumanTime.Mappers do
         opts = [
           hour: parse_int(regex_result["hour12"]) + period_alteration,
           minute: parse_int(regex_result["minute12"]),
-          second: 0
+          second: 0,
+          microsecond: {0, 0}
         ]
         fn the_date ->
           Timex.set(the_date, opts)
@@ -66,7 +67,8 @@ defmodule HumanTime.Mappers do
         opts = [
           hour: parse_int(regex_result["hour24"]),
           minute: parse_int(regex_result["minute24"]),
-          second: 0
+          second: 0,
+          microsecond: {0, 0}
         ]
         fn the_date ->
           Timex.set(the_date, opts)

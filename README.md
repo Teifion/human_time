@@ -14,9 +14,9 @@ Human Time can parse both repeating intervals (e.g. "every other day") and also 
   |> Enum.to_list
   
   > [
-      #DateTime<2018-08-15 15:30:00.848218Z>,
-      #DateTime<2018-08-22 15:30:00.848218Z>,
-      #DateTime<2018-08-29 15:30:00.848218Z>
+      #DateTime<2018-08-15 15:30:00Z>,
+      #DateTime<2018-08-22 15:30:00Z>,
+      #DateTime<2018-08-29 15:30:00Z>
     ]
 ```
 
