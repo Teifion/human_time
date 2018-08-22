@@ -6,10 +6,10 @@ Adapted from my [human_time library for Python](https://github.com/Teifion/human
 This is my first attempt at putting a package onto hex so please feel free to give input on what should be changed but also be mindful I'm unlikely to have experience doing everything suggested.
 
 ## Usage
-Human time has only a single function, `parse`. It only requires a string detailing a sequence of date or datetimes.
+Human Time can parse both repeating intervals (e.g. "every other day") and also one off relative times (e.g. "next tuesday at 3pm").
 
 ```elixir
-  HumanTime.parse("Every wednesday at 1530")
+  HumanTime.repeating("Every wednesday at 1530")
   |> Stream.take(3)
   |> Enum.to_list
   
@@ -20,7 +20,7 @@ Human time has only a single function, `parse`. It only requires a string detail
     ]
 ```
 
-If a time is not part of the string, datetimes will be outputted as the current time. To get around this I suggest using "at midnight" to set them to 00:00.
+If a time is not part of the string, datetimes will be outputted as being at midnight. You can set a time such as "at 1500" or "at noon" but you can also say "at the current time" or "at this time" and it will take the time of parsing and repeat that.
 
 ### Options
 from: Dictates the date the sequence will begin from (defaults to starting from now)
@@ -43,12 +43,13 @@ end
 
 ## Roadmap / TODO
  - Handle one off times such as "next friday at 2pm"
+ - Allow for combining strings with "and", e.g. "every friday and every other thursday"
+ - Allow for exceptsions with "except", e.g. "every weekday except fridays"
  - Add blocker match in, if a matcher matches on a block it won't trigger, currently using a workaround for some of them
  - Better handle state in the filter and mappers (to allow for things like "every other")
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
  - Add time jumps such as "25th minute of every other hour"
  - Enable other generators with strings such as "every other second"
- - Documentation
 
 
 ## License

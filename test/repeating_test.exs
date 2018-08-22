@@ -1,4 +1,4 @@
-defmodule HumanTime.IntervalTest do
+defmodule HumanTime.RepeatingTest do
   use ExUnit.Case
   doctest HumanTime
   
@@ -9,10 +9,10 @@ defmodule HumanTime.IntervalTest do
     until = Timex.shift(from, years: 1)
     
     stream1 = "every other tuesday at midnight"
-    |> HumanTime.parse(from: from, until: until)
+    |> HumanTime.repeating(from: from, until: until)
     
     stream2 = "every other wednesday at midnight"
-    |> HumanTime.parse(from: from, until: until)
+    |> HumanTime.repeating(from: from, until: until)
     |> Stream.take(3)
     
     # We've run some of the 2nd stream, lets ensure 1 is still good
@@ -98,14 +98,14 @@ defmodule HumanTime.IntervalTest do
         Timex.to_datetime({{2013, 12, 7}, {0, 0, 0}}, "Europe/London"),
       ]},
       
-      {"weekday at noon", [
+      {"every weekday at noon", [
         Timex.to_datetime({{2013, 12, 4}, {12, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 5}, {12, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 6}, {12, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 9}, {12, 0, 0}}, "Europe/London"),
       ]},
       
-      {"weekend at 1500", [
+      {"every weekend at 1500", [
         Timex.to_datetime({{2013, 12, 7}, {15, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 8}, {15, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 14}, {15, 0, 0}}, "Europe/London"),
@@ -190,7 +190,7 @@ defmodule HumanTime.IntervalTest do
       
       # Especially useful as the final step crosses a DST barrier and flagged up a bug
       # where the wrong day could be used
-      {"first monday after second sunday of month at midnight", [
+      {"first monday after second sunday of every month at midnight", [
         Timex.to_datetime({{2013, 12, 9}, {0, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2014, 1, 13}, {0, 0, 0}}, "Europe/London"),
         Timex.to_datetime({{2014, 2, 10}, {0, 0, 0}}, "Europe/London"),
@@ -221,7 +221,7 @@ defmodule HumanTime.IntervalTest do
     
     for {input_string, expected} <- values do
       results = input_string
-      |> HumanTime.parse(from: from, until: until)
+      |> HumanTime.repeating(from: from, until: until)
       |> Stream.take(Enum.count(expected))
       |> Enum.to_list
       

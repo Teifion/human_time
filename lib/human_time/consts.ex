@@ -7,6 +7,8 @@ defmodule HumanTime.Consts do
   @all_day_names @day_names <> "|weekday|day|weekend"
   # @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
   
+  @iterators "every|every other"
+  
   @time_term "(midnight|noon|midday|morning)"
   @time_current "(this|current) time"
   @time_12h "(?P<hour12>[0-9]|1[0-2])(:(?P<minute12>[0-5][0-9]))?(?P<period>am|pm)"
@@ -27,6 +29,7 @@ defmodule HumanTime.Consts do
     |> String.replace("#DAY_NAMES#", @day_names)
     |> String.replace("#ALL_DAY_NAMES#", @all_day_names)
     |> String.replace("#TIME_ALL#", @time_all)
+    |> String.replace("#ITERATORS#", @iterators)
     |> Regex.compile!
   end
   
