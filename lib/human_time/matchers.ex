@@ -25,7 +25,7 @@ defmodule HumanTime.Matchers do
       # X Y of month
       # e.g. first monday of month
       Consts.create_pattern("(?P<after_catch>after )?(?P<selector>#SELECTOR_NAMES#) (?P<principle>#DAY_NAMES#) of (?P<ITERATOR>#ITERATORS#) month"),
-      nil,
+      Consts.create_pattern("(?P<after_catch>after) (?P<selector>#SELECTOR_NAMES#)"),
       &Generators.days/1,
       [&Filters.identifier_in_month/1],
       []

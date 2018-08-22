@@ -13,7 +13,7 @@ defmodule HumanTime.Filters do
     "weekend"   => [6, 7],
     "day"       => [1, 2, 3, 4, 5, 6, 7],
   }
-
+  
   @sector_indexes %{
     "first"  => 0,
     "second" => 1,
@@ -28,7 +28,7 @@ defmodule HumanTime.Filters do
   #   end
   # end
   
-  @spec weekday(map) :: fun
+  @spec weekday(map) :: (DateTime.t -> DateTime.t | nil)
   def weekday(match) do
     day_numbers = @day_map[match["principle"]]
     
@@ -38,8 +38,7 @@ defmodule HumanTime.Filters do
   end
   
   # If we catch an after then it means this function was triggered incorrectly
-  @spec identifier_in_month(map) :: fun
-  def identifier_in_month(%{"after_catch" => "after "}), do: fn _ -> true end
+  @spec identifier_in_month(map) :: (DateTime.t -> DateTime.t | nil)
   def identifier_in_month(match) do
     selector  = match["selector"]
     the_day   = match["principle"]
@@ -58,7 +57,7 @@ defmodule HumanTime.Filters do
     end
   end
   
-  @spec identifier_in_month_after(map) :: fun
+  @spec identifier_in_month_after(map) :: (DateTime.t -> DateTime.t | nil)
   def identifier_in_month_after(match) do
     selector1  = match["selector1"]
     the_day1   = match["principle1"]
@@ -83,7 +82,7 @@ defmodule HumanTime.Filters do
     
   end
   
-  @spec day_number_in_month(map) :: fun
+  @spec day_number_in_month(map) :: (DateTime.t -> DateTime.t | nil)
   def day_number_in_month(match) do
     day_number = match["selector"]
     |> String.to_integer
@@ -93,7 +92,7 @@ defmodule HumanTime.Filters do
     end
   end
   
-  @spec end_of_month(map) :: fun
+  @spec end_of_month(map) :: (DateTime.t -> DateTime.t | nil)
   def end_of_month(_match) do
     fn the_date ->
       Timex.to_date(the_date) == Timex.end_of_month(the_date) |> Timex.to_date

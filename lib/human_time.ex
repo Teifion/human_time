@@ -42,7 +42,7 @@ defmodule HumanTime do
     |> Stream.filter(&(&1 != nil))
   end
   
-  @spec relative(String.t(), [term]) :: Date
+  @spec relative(String.t(), [term]) :: any
   def relative(timestring, opts \\ []) do
     
   end

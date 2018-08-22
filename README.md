@@ -42,11 +42,9 @@ end
 ```
 
 ## Roadmap / TODO
- - Handle one off times such as "next friday at 2pm"
+ - Handle one off times such as "next friday at 2pm", including ISO datetimes
  - Allow for combining strings with "and", e.g. "every friday and every other thursday"
  - Allow for exceptsions with "except", e.g. "every weekday except fridays"
- - Add blocker match in, if a matcher matches on a block it won't trigger, currently using a workaround for some of them
- - Better handle state in the filter and mappers (to allow for things like "every other")
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
  - Add time jumps such as "25th minute of every other hour"
  - Enable other generators with strings such as "every other second"
