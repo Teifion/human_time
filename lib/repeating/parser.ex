@@ -1,6 +1,7 @@
 defmodule HumanTime.Repeating.Parser do
   @moduledoc false
   
+  alias HumanTime.Common.StringLib
   alias HumanTime.Repeating.Matchers
   
   @doc """
@@ -9,7 +10,7 @@ defmodule HumanTime.Repeating.Parser do
   """
   @spec build_functions(String.t()) :: {fun, fun, fun}
   def build_functions(timestring) do
-    timestring = clean(timestring)
+    timestring = StringLib.clean(timestring)
     
     first_pass = Matchers.get_matchers()
     |> Enum.map(fn {pattern, blocker, generator, filter_functions, mapper_functions} ->
@@ -88,20 +89,5 @@ defmodule HumanTime.Repeating.Parser do
       mapper_functions
       |> Enum.reduce(value, fn (f, acc) -> f.(acc) end)
     end
-  end
-  
-  # Removes double-spacing from the string,
-  # downcases the string as we don't want it to have
-  # to watch for case in the regex
-  @doc false
-  @spec clean(String.t()) :: String.t()
-  defp clean(timestring) do
-    timestring
-    # |> String.replace("every", "")
-    |> String.replace("  ", " ")
-    |> String.replace("  ", " ")
-    |> String.replace("  ", " ")
-    |> String.trim
-    |> String.downcase
   end
 end

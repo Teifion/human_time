@@ -1,7 +1,7 @@
 defmodule HumanTime.Repeating.Mappers do
   @moduledoc false
   
-  alias HumanTime.Repeating.Consts
+  alias HumanTime.Common.Consts
   alias HumanTime.Repeating.State
   
   @time_indexes %{

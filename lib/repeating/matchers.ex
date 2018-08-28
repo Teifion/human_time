@@ -1,7 +1,7 @@
 defmodule HumanTime.Repeating.Matchers do
   @moduledoc false
   
-  alias HumanTime.Repeating.Consts
+  alias HumanTime.Common.Consts
   alias HumanTime.Repeating.Filters
   alias HumanTime.Repeating.Mappers
   alias HumanTime.Repeating.Generators

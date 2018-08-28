@@ -62,7 +62,7 @@ defmodule HumanTime.RepeatingTest do
     ]
     
     for {pattern, has_match, no_match} <- values do
-      regex = HumanTime.Repeating.Consts.create_pattern(pattern)
+      regex = HumanTime.Common.Consts.create_pattern(pattern)
       
       assert Regex.run(regex, has_match) != nil
       assert Regex.run(regex, no_match) == nil

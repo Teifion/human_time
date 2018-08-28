@@ -1,4 +1,4 @@
-defmodule HumanTime.Repeating.Consts do
+defmodule HumanTime.Common.Consts do
   @moduledoc false
   
   # Regex.compile
@@ -7,6 +7,7 @@ defmodule HumanTime.Repeating.Consts do
   @all_day_names @day_names <> "|weekday|day|weekend"
   # @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
   
+  @amounts "([0-9]+|one|two|three|four|five|six|seven|eight|nine|ten)"
   @iterators "every|every other"
   
   @time_term "(midnight|noon|midday|morning)"
@@ -30,6 +31,7 @@ defmodule HumanTime.Repeating.Consts do
     |> String.replace("#ALL_DAY_NAMES#", @all_day_names)
     |> String.replace("#TIME_ALL#", @time_all)
     |> String.replace("#ITERATORS#", @iterators)
+    |> String.replace("#AMOUNT#", @amounts)
     |> Regex.compile!
   end
   

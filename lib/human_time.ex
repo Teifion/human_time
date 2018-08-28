@@ -4,6 +4,7 @@ defmodule HumanTime do
   """
   
   alias HumanTime.Repeating
+  alias HumanTime.Relative
   
   @doc """
   Generates a stream of datetimes for the string given.
@@ -43,8 +44,9 @@ defmodule HumanTime do
   
   @spec relative(String.t(), [term]) :: any
   def relative(timestring, opts \\ []) do
+    from = opts[:from] || Timex.now()
     
+    Relative.Parser.parse(timestring, from)
   end
-  
   
 end
