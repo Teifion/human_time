@@ -5,10 +5,10 @@ defmodule HumanTime.Mappers do
   alias HumanTime.State
   
   @time_indexes %{
-    "noon"    => [hour: 12, minute: 0, second: 0],
-    "midday"  => [hour: 12, minute: 0, second: 0],
-    "morning" => [hour: 8, minute: 0, second: 0],
-    "midnight" => [hour: 0, minute: 0, second: 0],
+    "noon"    => [hour: 12, minute: 0, second: 0, microsecond: {0, 0}],
+    "midday"  => [hour: 12, minute: 0, second: 0, microsecond: {0, 0}],
+    "morning" => [hour: 8, minute: 0, second: 0, microsecond: {0, 0}],
+    "midnight" => [hour: 0, minute: 0, second: 0, microsecond: {0, 0}],
   }
 
   # @sector_indexes %{
