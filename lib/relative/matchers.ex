@@ -12,10 +12,35 @@ defmodule HumanTime.Relative.Matchers do
     {
       # Xd, Xdays
       # 5d, 5days
+      Consts.create_pattern("(?P<amount>#AMOUNT#) ?(m|min|minute|mins|minutes)$"),
+      nil,
+      &Mappers.x_minutes/2
+    },
+    {
+      # Xd, Xdays
+      # 5d, 5days
+      Consts.create_pattern("(?P<amount>#AMOUNT#) ?(h|hour|hours)$"),
+      nil,
+      &Mappers.x_hours/2
+    },
+    {
+      # Xd, Xdays
+      # 5d, 5days
       Consts.create_pattern("(?P<amount>#AMOUNT#) ?(d|day|days)$"),
       nil,
       &Mappers.x_days/2
     },
+    
+    {
+      Consts.create_pattern("(?P<date>#DATE#)"),
+      Consts.create_pattern("(?P<date>#DATE#) at"),
+      &Mappers.date/2
+    },
+    {
+      Consts.create_pattern("(?P<date>#DATE#) at (?P<time>#TIME_ALL#)"),
+      nil,
+      &Mappers.date_and_time/2
+    }
   ]
   
   @spec get_matchers() :: list

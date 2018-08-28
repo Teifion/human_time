@@ -7,8 +7,14 @@ defmodule HumanTime.Common.Consts do
   @all_day_names @day_names <> "|weekday|day|weekend"
   # @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
   
+  @relative_name "(today|tomorrow|yesterday)"
   @amounts "([0-9]+|one|two|three|four|five|six|seven|eight|nine|ten)"
   @iterators "every|every other"
+  
+  @sep "[-/]"
+  @dmy_date "((?<dmy_d>[0-9]{1,2})#{@sep}(?<dmy_m>[0-9]{1,2})#{@sep}(?<dmy_y>[0-9]{2,4}))"
+  @ymd_date "((?<ymd_y>[0-9]{4})#{@sep}(?<ymd_m>[0-9]{1,2})#{@sep}(?<ymd_d>[0-9]{1,2}))"
+  @date "(?:#{@dmy_date}|#{@ymd_date})"
   
   @time_term "(midnight|noon|midday|morning)"
   @time_current "(this|current) time"
@@ -30,6 +36,7 @@ defmodule HumanTime.Common.Consts do
     |> String.replace("#DAY_NAMES#", @day_names)
     |> String.replace("#ALL_DAY_NAMES#", @all_day_names)
     |> String.replace("#TIME_ALL#", @time_all)
+    |> String.replace("#DATE#", @date)
     |> String.replace("#ITERATORS#", @iterators)
     |> String.replace("#AMOUNT#", @amounts)
     |> Regex.compile!
