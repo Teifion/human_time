@@ -1,8 +1,8 @@
-defmodule HumanTime.Mappers do
+defmodule HumanTime.Repeating.Mappers do
   @moduledoc false
   
-  alias HumanTime.Consts
-  alias HumanTime.State
+  alias HumanTime.Repeating.Consts
+  alias HumanTime.Repeating.State
   
   @time_indexes %{
     "noon"    => [hour: 12, minute: 0, second: 0, microsecond: {0, 0}],

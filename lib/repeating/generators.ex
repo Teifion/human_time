@@ -1,4 +1,4 @@
-defmodule HumanTime.Generators do
+defmodule HumanTime.Repeating.Generators do
   @moduledoc false
   
   @spec seconds(DateTime.t) :: DateTime.t

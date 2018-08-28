@@ -1,7 +1,7 @@
-defmodule HumanTime.Parser do
+defmodule HumanTime.Repeating.Parser do
   @moduledoc false
   
-  alias HumanTime.Matchers
+  alias HumanTime.Repeating.Matchers
   
   @doc """
   Run the timestring through each filter pattern

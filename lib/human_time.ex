@@ -3,8 +3,7 @@ defmodule HumanTime do
   Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "next friday at 2pm" and convert it into a one or a sequence of date times as allowed by the string.
   """
   
-  alias HumanTime.Generators
-  alias HumanTime.Parser
+  alias HumanTime.Repeating
   
   @doc """
   Generates a stream of datetimes for the string given.
@@ -30,10 +29,10 @@ defmodule HumanTime do
     from = opts[:from] || Timex.now()
     until = opts[:until]
     
-    while_function = Generators.while_function(until)
+    while_function = Repeating.Generators.while_function(until)
     
     {generator_function, filter_function, mapper_function} = timestring
-    |> Parser.build_functions
+    |> Repeating.Parser.build_functions
     
     Stream.iterate(from, generator_function)
     |> Stream.take_while(while_function)

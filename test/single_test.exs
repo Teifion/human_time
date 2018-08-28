@@ -33,16 +33,9 @@ defmodule HumanTime.SingleTest do
       expected = Timex.to_datetime(expected_tuple, "Europe/London")
       
       result = input_string
-      |> HumanTime.parse_date(from: from, until: until)
-      |> Stream.take(Enum.count(expected))
-      |> Enum.to_list
+      |> HumanTime.relative(from: from)
       
-      assert Enum.count(results) == Enum.count(expected), message: "Error with: #{input_string}, different number of results vs expected, expected #{Enum.count(expected)}, got #{Enum.count(results)}"
-      
-      for {expected_item, result_item} <- Enum.zip([expected, results]) do
-        assert expected_item == result_item, message: "Error with: #{input_string}, expected #{expected_item}, got #{result_item}"
-      end
-      
+      assert expected == result, message: "Error with: #{input_string}, expected #{expected}, got #{result}"
     end
   end
 end

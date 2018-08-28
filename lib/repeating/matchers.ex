@@ -1,10 +1,10 @@
-defmodule HumanTime.Matchers do
+defmodule HumanTime.Repeating.Matchers do
   @moduledoc false
   
-  alias HumanTime.Consts
-  alias HumanTime.Filters
-  alias HumanTime.Mappers
-  alias HumanTime.Generators
+  alias HumanTime.Repeating.Consts
+  alias HumanTime.Repeating.Filters
+  alias HumanTime.Repeating.Mappers
+  alias HumanTime.Repeating.Generators
   
   # Each matcher consists of a tuple of:
   # A matcher, if this matches we will test for the blocker

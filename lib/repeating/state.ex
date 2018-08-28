@@ -1,4 +1,4 @@
-defmodule HumanTime.State do
+defmodule HumanTime.Repeating.State do
   @moduledoc false
   
   use GenServer

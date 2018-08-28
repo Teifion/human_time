@@ -1,4 +1,4 @@
-defmodule HumanTime.Consts do
+defmodule HumanTime.Repeating.Consts do
   @moduledoc false
   
   # Regex.compile

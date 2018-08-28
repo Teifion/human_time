@@ -1,4 +1,4 @@
-defmodule HumanTime.Filters do
+defmodule HumanTime.Repeating.Filters do
   @moduledoc false
   
   @day_map %{
