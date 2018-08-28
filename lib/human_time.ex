@@ -25,28 +25,47 @@ defmodule HumanTime do
       #=>   #DateTime<2018-08-29 15:30:00.848218Z>
       #=> ]
   """
-  @spec repeating(String.t(), [term]) :: Enumerable.t
+  @spec repeating(String.t(), [term]) :: {:ok, Enumerable.t} | {:error, String.t}
   def repeating(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
     until = opts[:until]
     
     while_function = Repeating.Generators.while_function(until)
+    result = Repeating.Parser.build_functions(timestring)
     
-    {generator_function, filter_function, mapper_function} = timestring
-    |> Repeating.Parser.build_functions
-    
-    Stream.iterate(from, generator_function)
-    |> Stream.take_while(while_function)
-    |> Stream.filter(filter_function)
-    |> Stream.map(mapper_function)
-    |> Stream.filter(&(&1 != nil))
+    case result do
+      {:error, msg} -> {:error, msg}
+      {:ok, {generator_function, filter_function, mapper_function}} ->
+        {:ok, Stream.iterate(from, generator_function)
+        |> Stream.take_while(while_function)
+        |> Stream.filter(filter_function)
+        |> Stream.map(mapper_function)
+        |> Stream.filter(&(&1 != nil))}
+    end
   end
   
-  @spec relative(String.t(), [term]) :: any
+  @spec repeating!(String.t(), [term]) :: Enumerable.t
+  def repeating!(timestring, opts \\ []) do
+    case repeating(timestring, opts) do
+      {:ok, enumerable} -> enumerable
+      {:error, msg} -> raise msg
+    end
+  end
+  
+  
+  @spec relative(String.t(), [term]) :: {:ok, DateTime.t} | {:error, String.t}
   def relative(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
     
     Relative.Parser.parse(timestring, from)
+  end
+  
+  @spec relative!(String.t(), [term]) :: DateTime.t
+  def relative!(timestring, opts \\ []) do
+    case relative(timestring, opts) do
+      {:ok, the_datetime} -> the_datetime
+      {:error, msg} -> raise msg
+    end
   end
   
 end

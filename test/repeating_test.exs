@@ -2,6 +2,13 @@ defmodule HumanTime.RepeatingTest do
   use ExUnit.Case
   doctest HumanTime
   
+  test "no match" do
+    assert_raise RuntimeError, fn ->
+      "no match found!"
+      |> HumanTime.repeating!
+    end
+  end
+  
   # We are using a genserver without a supervisor in the every other mapper
   # this test is to ensure we can have two operating at the same time
   test "concurrency" do
@@ -9,10 +16,10 @@ defmodule HumanTime.RepeatingTest do
     until = Timex.shift(from, years: 1)
     
     stream1 = "every other tuesday at midnight"
-    |> HumanTime.repeating(from: from, until: until)
+    |> HumanTime.repeating!(from: from, until: until)
     
     stream2 = "every other wednesday at midnight"
-    |> HumanTime.repeating(from: from, until: until)
+    |> HumanTime.repeating!(from: from, until: until)
     |> Stream.take(3)
     
     # We've run some of the 2nd stream, lets ensure 1 is still good
@@ -221,7 +228,7 @@ defmodule HumanTime.RepeatingTest do
     
     for {input_string, expected} <- values do
       results = input_string
-      |> HumanTime.repeating(from: from, until: until)
+      |> HumanTime.repeating!(from: from, until: until)
       |> Stream.take(Enum.count(expected))
       |> Enum.to_list
       

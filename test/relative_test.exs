@@ -33,7 +33,7 @@ defmodule HumanTime.SingleTest do
       expected = Timex.to_datetime(expected_tuple, "Europe/London")
       
       result = input_string
-      |> HumanTime.relative(from: from)
+      |> HumanTime.relative!(from: from)
       
       assert expected == result, message: "Error with: #{input_string}, expected #{expected}, got #{result}"
     end

@@ -12,7 +12,7 @@ defmodule HumanTime.Relative.Parser do
   def parse(timestring, from) do
     timestring = StringLib.clean(timestring)
     
-    {mapper, regex_result} = Matchers.get_matchers()
+    Matchers.get_matchers()
     |> Enum.map(fn {pattern, blocker, mapper} ->
       regex_result = Regex.named_captures(pattern, timestring)
       
@@ -29,8 +29,17 @@ defmodule HumanTime.Relative.Parser do
     |> Enum.map(fn {_, _, mapper, regex_result} ->
       {mapper, regex_result}
     end)
-    |> hd
+    |> compose(from)
+  end
+  
+  @spec compose(list, Datetime.t) :: {:ok, Datetime.t} | {:error, String.t}
+  defp compose([], _), do: {:error, "No match found"}
+  defp compose(results, from) do
+    {mapper, regex_result} = hd(results)
     
-    mapper.(regex_result, from)
+    case mapper.(regex_result, from) do
+      {:ok, the_datetime} -> {:ok, the_datetime}
+      {:error, msg} -> raise msg
+    end
   end
 end

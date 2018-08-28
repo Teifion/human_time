@@ -8,11 +8,11 @@ defmodule HumanTime.Repeating.Parser do
   Run the timestring through each filter pattern
   With matches, create a set of filter functions to test
   """
-  @spec build_functions(String.t()) :: {fun, fun, fun}
+  @spec build_functions(String.t()) :: {:ok, {fun, fun, fun}} | {:error, String.t}
   def build_functions(timestring) do
     timestring = StringLib.clean(timestring)
     
-    first_pass = Matchers.get_matchers()
+    Matchers.get_matchers()
     |> Enum.map(fn {pattern, blocker, generator, filter_functions, mapper_functions} ->
       regex_result = Regex.named_captures(pattern, timestring)
       
@@ -29,7 +29,12 @@ defmodule HumanTime.Repeating.Parser do
     |> Enum.map(fn {_, _, generator, filter_functions, mapper_functions, regex_result} ->
       {generator, filter_functions, mapper_functions, regex_result}
     end)
-    
+    |> compose
+  end
+  
+  @spec compose(List) :: {:ok, {fun, fun, fun}} | {:error, String.t}
+  defp compose([]), do: {:error, "No match found"}
+  defp compose(first_pass) do
     # Build generator
     generator_function = first_pass
     |> Enum.map(fn {generator, _filter_functions, _, _regex_result} ->
@@ -64,7 +69,7 @@ defmodule HumanTime.Repeating.Parser do
     |> List.flatten
     |> compose_mappers
     
-    {generator_function, filter_function, mapper_function}
+    {:ok, {generator_function, filter_function, mapper_function}}
   end
   
   # def compose_filters([]) do

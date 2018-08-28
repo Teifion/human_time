@@ -6,7 +6,7 @@ defmodule HumanTime.Relative.Mappers do
     amount = regex["amount"]
     |> StringLib.convert_amount
     
-    Timex.shift(from, days: amount)
+    {:ok, Timex.shift(from, days: amount)}
   end
   
   
