@@ -1,6 +1,6 @@
 defmodule HumanTime.Common.TimeLib do
   alias HumanTime.Common.Consts
-  
+  alias HumanTime.Common.StringLib
   
   @time_indexes %{
     "noon"    => [hour: 12, minute: 0, second: 0, microsecond: {0, 0}],
@@ -24,7 +24,43 @@ defmodule HumanTime.Common.TimeLib do
       time_24h -> {:time_24h, time_24h}
       time_term -> {:time_term, time_term}
       time_current -> {:time_current, time_current}
-      # time_all -> {:time_all, time_all}
+      true -> {:no_time, nil}
+    end
+  end
+  
+  # @spec apply_time(arg_type) :: return_type
+  def apply_time(the_date, ""), do: the_date
+  def apply_time(the_date, time_match) do
+    {time_type, match_result} = time_match
+    |> match_time
+    
+    case time_type do
+      :time_12h ->
+        period_alteration = if match_result["period"] == "pm", do: 12, else: 0
+        
+        opts = [
+          hour: StringLib.parse_int(match_result["hour12"]) + period_alteration,
+          minute: StringLib.parse_int(match_result["minute12"]),
+          second: 0,
+          microsecond: {0, 0}
+        ]
+        Timex.set(the_date, opts)
+      
+      :time_24h ->
+        opts = [
+          hour: StringLib.parse_int(match_result["hour24"]),
+          minute: StringLib.parse_int(match_result["minute24"]),
+          second: 0,
+          microsecond: {0, 0}
+        ]
+        Timex.set(the_date, opts)
+      
+      :time_term ->
+        opts = @time_indexes[time_match]
+        Timex.set(the_date, opts)
+      
+      :time_current ->
+        the_date
     end
   end
 end

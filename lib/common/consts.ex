@@ -8,6 +8,7 @@ defmodule HumanTime.Common.Consts do
   # @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
   
   @relative_name "(today|tomorrow|yesterday)"
+  @relative_reference "(this|next|last)"
   @amounts "([0-9]+|one|two|three|four|five|six|seven|eight|nine|ten)"
   @iterators "every|every other"
   
@@ -39,6 +40,8 @@ defmodule HumanTime.Common.Consts do
     |> String.replace("#DATE#", @date)
     |> String.replace("#ITERATORS#", @iterators)
     |> String.replace("#AMOUNT#", @amounts)
+    |> String.replace("#RELATIVE_NAME#", @relative_name)
+    |> String.replace("#RELATIVE_REFERENCE#", @relative_reference)
     |> Regex.compile!
   end
   

@@ -9,38 +9,50 @@ defmodule HumanTime.Relative.Matchers do
   # A block, if this also matches we will skip this match, this allows us to have similar but different matchers which don't overlap. If nil there is no block.
   # A function to create the datetime based on the timestring and options
   @matchers [
+    # Relative amount shorthand
     {
-      # Xd, Xdays
-      # 5d, 5days
+      # Xm, Xminutes
       Consts.create_pattern("(?P<amount>#AMOUNT#) ?(m|min|minute|mins|minutes)$"),
       nil,
       &Mappers.x_minutes/2
     },
     {
-      # Xd, Xdays
-      # 5d, 5days
+      # Xh, Xhours
       Consts.create_pattern("(?P<amount>#AMOUNT#) ?(h|hour|hours)$"),
       nil,
       &Mappers.x_hours/2
     },
     {
       # Xd, Xdays
-      # 5d, 5days
       Consts.create_pattern("(?P<amount>#AMOUNT#) ?(d|day|days)$"),
       nil,
       &Mappers.x_days/2
     },
-    
     {
-      Consts.create_pattern("(?P<date>#DATE#)"),
-      Consts.create_pattern("(?P<date>#DATE#) at"),
-      &Mappers.date/2
-    },
-    {
-      Consts.create_pattern("(?P<date>#DATE#) at (?P<time>#TIME_ALL#)"),
+      # Xw, Xweeks
+      Consts.create_pattern("(?P<amount>#AMOUNT#) ?(w|week|weeks)$"),
       nil,
-      &Mappers.date_and_time/2
-    }
+      &Mappers.x_weeks/2
+    },
+    
+    # Date parsing
+    {
+      Consts.create_pattern("(?P<date>#DATE#)( at (?P<time>#TIME_ALL#))?"),
+      nil,
+      &Mappers.set_value/2
+    },
+    
+    # # Relative names
+    # {
+    #   Consts.create_pattern("(?P<relative_name>#RELATIVE_NAME#) (?P<day_name>#ALL_DAY_NAMES#)"),
+    #   Consts.create_pattern("(?P<relative_name>#RELATIVE_NAME#) (?P<day_name>#ALL_DAY_NAMES#) at"),
+    #   &Mappers.relative_date_by_name/2
+    # },
+    # {
+    #   Consts.create_pattern("(?P<relative_name>#RELATIVE_NAME#) (?P<day_name>#ALL_DAY_NAMES#) at (?P<time>#TIME_ALL#)"),
+    #   nil,
+    #   &Mappers.relative_date_and_time_by_name/2
+    # }
   ]
   
   @spec get_matchers() :: list
