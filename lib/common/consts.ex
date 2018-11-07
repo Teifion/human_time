@@ -8,7 +8,7 @@ defmodule HumanTime.Common.Consts do
   # @month_names "january|february|march|april|may|june|july|august|september|october|november|december"
   
   @relative_name "(today|tomorrow|yesterday)"
-  @relative_reference "(this|next|last)"
+  @relative_adjuster "(this|next|last|week this|week next|week)"
   @amounts "([0-9]+|one|two|three|four|five|six|seven|eight|nine|ten)"
   @iterators "every|every other"
   
@@ -30,6 +30,21 @@ defmodule HumanTime.Common.Consts do
   @time_24h_compiled @time_24h |> Regex.compile!
   @time_all_compiled @time_all |> Regex.compile!
   
+  
+  @day_map %{
+    "monday"    => [1],
+    "tuesday"   => [2],
+    "wednesday" => [3],
+    "thursday"  => [4],
+    "friday"    => [5],
+    "saturday"  => [6],
+    "sunday"    => [7],
+    "weekday"   => [1, 2, 3, 4, 5],
+    "weekend"   => [6, 7],
+    "day"       => [1, 2, 3, 4, 5, 6, 7],
+  }
+  
+  
   @spec create_pattern(String.t()) :: Regex.t
   def create_pattern(patten_string) do
     patten_string
@@ -41,7 +56,7 @@ defmodule HumanTime.Common.Consts do
     |> String.replace("#ITERATORS#", @iterators)
     |> String.replace("#AMOUNT#", @amounts)
     |> String.replace("#RELATIVE_NAME#", @relative_name)
-    |> String.replace("#RELATIVE_REFERENCE#", @relative_reference)
+    |> String.replace("#RELATIVE_ADJUSTER#", @relative_adjuster)
     |> Regex.compile!
   end
   
@@ -50,4 +65,6 @@ defmodule HumanTime.Common.Consts do
   def compiled_time_12h(), do: @time_12h_compiled
   def compiled_time_24h(), do: @time_24h_compiled
   def compiled_time_all(), do: @time_all_compiled
+  
+  def get_day_map(), do: @day_map
 end

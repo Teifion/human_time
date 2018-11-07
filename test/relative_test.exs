@@ -1,4 +1,4 @@
-defmodule HumanTime.SingleTest do
+defmodule HumanTime.RelativeTest do
   use ExUnit.Case
   doctest HumanTime
   
@@ -21,10 +21,15 @@ defmodule HumanTime.SingleTest do
       {"4/11/2013 at 0730", {{2013, 11, 4}, {07, 30, 0}}},
       {"4/11/2013 at noon", {{2013, 11, 4}, {12, 0, 0}}},
       
-      # {"tomorrow at 5pm", {{2013, 12, 5}, {17, 0, 0}}},
-      # {"next wednesday at 1500", {{2013, 12, 11}, {15, 0, 0}}},
-      # {"this time next friday", {{2013, 12, 13}, {06, 20, 05}}},
-      # {"week friday", {{2013, 12, 4}, {06, 20, 05}}},
+      {"this wednesday at noon", {{2013, 12, 4}, {12, 0, 0}}},
+      {"next wednesday at 1500", {{2013, 12, 11}, {15, 0, 0}}},
+      {"tomorrow at 5pm", {{2013, 12, 5}, {17, 0, 0}}},
+      {"tomorrow", {{2013, 12, 5}, {06, 20, 5}}},
+      {"yesterday", {{2013, 12, 3}, {06, 20, 5}}},
+      {"today at 8pm", {{2013, 12, 4}, {20, 0, 0}}},
+      {"this time next friday", {{2013, 12, 13}, {06, 20, 05}}},
+      {"week friday", {{2013, 12, 13}, {06, 20, 05}}},
+      {"week next friday at 2am", {{2013, 12, 20}, {2, 0, 0}}},
     ]
     
     # A calendar of December 2013 (the month this date falls into)

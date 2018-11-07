@@ -40,8 +40,6 @@ defmodule HumanTime.Common.StringLib do
     |> Timex.to_date
   end
   
-  
-  
   # Specific handler for parsing time when we expect there
   # to be a possibility of empty strings which need to mean 0
   @spec parse_int(String.t()) :: integer

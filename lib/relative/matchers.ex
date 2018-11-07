@@ -42,17 +42,19 @@ defmodule HumanTime.Relative.Matchers do
       &Mappers.set_value/2
     },
     
-    # # Relative names
-    # {
-    #   Consts.create_pattern("(?P<relative_name>#RELATIVE_NAME#) (?P<day_name>#ALL_DAY_NAMES#)"),
-    #   Consts.create_pattern("(?P<relative_name>#RELATIVE_NAME#) (?P<day_name>#ALL_DAY_NAMES#) at"),
-    #   &Mappers.relative_date_by_name/2
-    # },
-    # {
-    #   Consts.create_pattern("(?P<relative_name>#RELATIVE_NAME#) (?P<day_name>#ALL_DAY_NAMES#) at (?P<time>#TIME_ALL#)"),
-    #   nil,
-    #   &Mappers.relative_date_and_time_by_name/2
-    # }
+    # Relative names - e.g. yesterday
+    {
+      Consts.create_pattern("(?P<day_name>#RELATIVE_NAME#)( at (?P<time>#TIME_ALL#))?"),
+      nil,
+      &Mappers.relative_by_name/2
+    },
+    
+    # Relative date - next wednesday
+    {
+      Consts.create_pattern("(?P<adjuster>#RELATIVE_ADJUSTER# )?(?P<day_name>#ALL_DAY_NAMES#)( at (?P<time>#TIME_ALL#))?"),
+      nil,
+      &Mappers.relative_by_date/2
+    },
   ]
   
   @spec get_matchers() :: list
