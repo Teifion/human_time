@@ -12,19 +12,23 @@ Human Time can parse both repeating intervals (e.g. "every other day") and also 
   HumanTime.repeating("Every wednesday at 1530")
   |> Stream.take(3)
   |> Enum.to_list
-  
+
   > [
       #DateTime<2018-08-15 15:30:00Z>,
       #DateTime<2018-08-22 15:30:00Z>,
       #DateTime<2018-08-29 15:30:00Z>
     ]
+
+  HumanTime.relative("Next wednesday at 1530")
+
+  > {:ok, #DateTime<2018-08-15 15:30:00.848218Z>}
 ```
 
 If a time is not part of the string, datetimes will be outputted as being at midnight. You can set a time such as "at 1500" or "at noon" but you can also say "at the current time" or "at this time" and it will take the time of parsing and repeat that.
 
 ### Options
-from: Dictates the date the sequence will begin from (defaults to starting from now)
-until: Dictates the date the sequence will end at (defaults to never finish)
+`from`: Dictates the date the sequence will begin from (defaults to starting from now)  
+`until`: Dictates the date the sequence will end at (defaults to never finish)
 
 ## Installation
 To add Human Time to your project, you only need to add it as a dependency and start it as an application in your mix.exs file.
@@ -32,7 +36,7 @@ To add Human Time to your project, you only need to add it as a dependency and s
 ```elixir
 def deps do
   [
-    {:human_time, "~> 0.1.0"}
+    {:human_time, "~> 0.2.0"}
   ]
 end
 
@@ -42,7 +46,7 @@ end
 ```
 
 ## Roadmap / TODO
- - Handle one off times such as "next friday at 2pm", including ISO datetimes
+ - ISO datetimes
  - Allow for combining strings with "and", e.g. "every friday and every other thursday"
  - Allow for exceptsions with "except", e.g. "every weekday except fridays"
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month

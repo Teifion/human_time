@@ -29,10 +29,10 @@ defmodule HumanTime do
   def repeating(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
     until = opts[:until]
-    
+
     while_function = Repeating.Generators.while_function(until)
     result = Repeating.Parser.build_functions(timestring)
-    
+
     case result do
       {:error, msg} -> {:error, msg}
       {:ok, {generator_function, filter_function, mapper_function}} ->
@@ -64,7 +64,7 @@ defmodule HumanTime do
 
   ## Example
       HumanTime.relative("Next wednesday at 1530")
-      
+
       #=> {:ok, #DateTime<2018-08-15 15:30:00.848218Z>}
   """
   @spec relative(String.t(), [term]) :: {:ok, DateTime.t} | {:error, String.t}
