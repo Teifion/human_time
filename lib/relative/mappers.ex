@@ -1,4 +1,5 @@
 defmodule HumanTime.Relative.Mappers do
+  @moduledoc false
   
   alias HumanTime.Common.Consts
   alias HumanTime.Common.StringLib

@@ -1,4 +1,6 @@
 defmodule HumanTime.Common.TimeLib do
+  @moduledoc false
+
   alias HumanTime.Common.Consts
   alias HumanTime.Common.StringLib
   

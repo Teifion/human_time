@@ -1,4 +1,6 @@
 defmodule HumanTime.Common.StringLib do
+  @moduledoc false
+  
   # Removes double-spacing from the string,
   # downcases the string as we don't want it to have
   # to watch for case in the regex
