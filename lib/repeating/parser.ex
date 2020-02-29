@@ -43,14 +43,7 @@ defmodule HumanTime.Repeating.Parser do
     |> Enum.filter(&(&1 != nil))
     |> Enum.uniq
     |> hd
-    
-    # Temporary code to debug if there are the correct generator functions
-    # generator_function = if Enum.count(generator_function) == 1 do
-    #   hd(generator_function)
-    # else
-    #   raise ""
-    # end
-    
+
     # Build filter function
     filter_function = first_pass
     |> Enum.map(fn {_, filter_functions, _, regex_result} ->
@@ -71,10 +64,7 @@ defmodule HumanTime.Repeating.Parser do
     
     {:ok, {generator_function, filter_function, mapper_function}}
   end
-  
-  # def compose_filters([]) do
-  #   compose_filters([HumanTime.Filters.always_true(nil)])
-  # end
+
   @spec compose_filters([fun]) :: fun
   def compose_filters(filter_functions) do
     fn value -> 
@@ -83,11 +73,7 @@ defmodule HumanTime.Repeating.Parser do
       |> Enum.all?
     end
   end
-  
-  # If no mapper functions, we want to set the out put to just a date
-  # def compose_mappers([]) do
-  #   compose_mappers([HumanTime.Mappers.remove_time(nil)])
-  # end
+
   @spec compose_mappers([fun]) :: fun
   def compose_mappers(mapper_functions) do
     fn value -> 

@@ -54,7 +54,7 @@ end
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:timex, "~> 3.1"},
+      {:timex, "~> 3.6"},
       {:excoveralls, "~> 0.8", only: :test},
       {:dialyxir, "~> 0.4", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},

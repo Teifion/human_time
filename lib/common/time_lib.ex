@@ -52,7 +52,7 @@ defmodule HumanTime.Common.TimeLib do
         opts = [
           hour: StringLib.parse_int(match_result["hour24"]),
           minute: StringLib.parse_int(match_result["minute24"]),
-          second: 0,
+          second: StringLib.parse_int(match_result["second"] || ""),
           microsecond: {0, 0}
         ]
         Timex.set(the_date, opts)

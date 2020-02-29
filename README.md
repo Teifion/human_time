@@ -46,7 +46,6 @@ end
 ```
 
 ## Roadmap / TODO
- - ISO datetimes
  - Allow for combining strings with "and", e.g. "every friday and every other thursday"
  - Allow for exceptsions with "except", e.g. "every weekday except fridays"
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month

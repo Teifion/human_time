@@ -37,7 +37,7 @@ defmodule HumanTime.Relative.Matchers do
     
     # Date parsing
     {
-      Consts.create_pattern("(?P<date>#DATE#)( at (?P<time>#TIME_ALL#))?"),
+      Consts.create_pattern("(?P<date>#DATE#)((?: at)? (?P<time>#TIME_ALL#))?"),
       nil,
       &Mappers.set_value/2
     },

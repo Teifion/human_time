@@ -8,7 +8,6 @@ defmodule HumanTime.Common.StringLib do
   @spec clean(String.t()) :: String.t()
   def clean(timestring) do
     timestring
-    # |> String.replace("every", "")
     |> String.replace("  ", " ")
     |> String.replace("  ", " ")
     |> String.replace("  ", " ")

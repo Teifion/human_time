@@ -29,7 +29,7 @@ defmodule HumanTime.Repeating.Mappers do
         opts = [
           hour: StringLib.parse_int(regex_result["hour24"]),
           minute: StringLib.parse_int(regex_result["minute24"]),
-          second: 0,
+          second: StringLib.parse_int(regex_result["second"] || ""),
           microsecond: {0, 0}
         ]
         fn the_date ->

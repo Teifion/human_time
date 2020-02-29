@@ -16,8 +16,10 @@ defmodule HumanTime.RelativeTest do
       {"5d", {{2013, 12, 9}, {06, 20, 05}}},
       
       {"4/11/2013", {{2013, 11, 4}, {0, 0, 0}}},
+      {"4/11/2013 12:44:55", {{2013, 11, 4}, {12, 44, 55}}},
       {"2013-11-4", {{2013, 11, 4}, {0, 0, 0}}},
       
+      {"4/11/2013 07:30:00", {{2013, 11, 4}, {07, 30, 0}}},
       {"4/11/2013 at 0730", {{2013, 11, 4}, {07, 30, 0}}},
       {"4/11/2013 at noon", {{2013, 11, 4}, {12, 0, 0}}},
       
@@ -48,10 +50,12 @@ defmodule HumanTime.RelativeTest do
     for {input_string, expected_tuple} <- values do
       expected = Timex.to_datetime(expected_tuple, "Europe/London")
       
-      result = input_string
-      |> HumanTime.relative!(from: from)
-      
-      assert expected == result, message: "Error with: #{input_string}, expected #{expected}, got #{result}"
+      case HumanTime.relative(input_string, from: from) do
+        {:ok, result} ->
+          assert expected == result, message: "Error with: '#{input_string}, expected #{expected}, got #{result}"
+        {:error, "No match found"} ->
+          flunk "No match found for '#{input_string}'"
+      end
     end
   end
 end
