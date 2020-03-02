@@ -2,88 +2,56 @@ defmodule HumanTime.RepeatingTest do
   use ExUnit.Case
   doctest HumanTime
   
-  test "no match" do
-    assert_raise RuntimeError, fn ->
-      "no match found!"
-      |> HumanTime.repeating!
-    end
-  end
-  
-  # We are using a genserver without a supervisor in the every other mapper
-  # this test is to ensure we can have two operating at the same time
-  test "concurrency" do
-    from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
-    until = Timex.shift(from, years: 1)
-    
-    stream1 = "every other tuesday at midnight"
-    |> HumanTime.repeating!(from: from, until: until)
-    
-    stream2 = "every other wednesday at midnight"
-    |> HumanTime.repeating!(from: from, until: until)
-    |> Stream.take(3)
-    
-    # We've run some of the 2nd stream, lets ensure 1 is still good
-    stream1
-    |> Stream.take(2)
-    
-    results1 = stream1
-    |> Enum.to_list
-    
-    results2 = stream2
-    |> Enum.to_list
-    
-    expected1 = [
-      Timex.to_datetime({{2013, 12, 10}, {0, 0, 0}}, "Europe/London"),
-      Timex.to_datetime({{2013, 12, 24}, {0, 0, 0}}, "Europe/London"),
-    ]
-    
-    expected2 = [
-      Timex.to_datetime({{2013, 12, 4}, {0, 0, 0}}, "Europe/London"),
-      Timex.to_datetime({{2013, 12, 18}, {0, 0, 0}}, "Europe/London"),
-      Timex.to_datetime({{2014, 1, 1}, {0, 0, 0}}, "Europe/London"),
-    ]
-    
-    # Test first stream
-    for {expected_item, result_item} <- Enum.zip([expected1, results1]) do
-      assert expected_item == result_item, message: "Error with: first stream, expected #{expected_item}, got #{result_item}"
-    end
-    
-    # Test second stream
-    for {expected_item, result_item} <- Enum.zip([expected2, results2]) do
-      assert expected_item == result_item, message: "Error with: first stream, expected #{expected_item}, got #{result_item}"
-    end
-  end
-  
-  test "compile regexs" do
-    values = [
-      {
-        "(basic regex)",
-        "basic regex string",
-        "no match"
-      },
-      {
-        "(#SELECTOR_NAMES#)",
-        "first",
-        "midday"
-      },
-    ]
-    
-    for {pattern, has_match, no_match} <- values do
-      regex = HumanTime.Common.Consts.create_pattern(pattern)
-      
-      assert Regex.run(regex, has_match) != nil
-      assert Regex.run(regex, no_match) == nil
-    end
-  end
-  
   test "complete cycles" do
     values = [
-      # {"every 5 seconds", [
-      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 10}}, "Europe/London"),
-      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 15}}, "Europe/London"),
-      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 20}}, "Europe/London"),
-      #   Timex.to_datetime({{2013, 12, 04}, {06, 20, 25}}, "Europe/London"),
-      # ]},
+      {"every 5 seconds", [
+        Timex.to_datetime({{2013, 12, 04}, {06, 20, 10}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {06, 20, 15}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {06, 20, 20}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {06, 20, 25}}, "Europe/London"),
+      ]},
+      
+      {"every 5 minutes", [
+        Timex.to_datetime({{2013, 12, 04}, {06, 25, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {06, 30, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {06, 35, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {06, 40, 5}}, "Europe/London"),
+      ]},
+      
+      {"every 5 hours", [
+        Timex.to_datetime({{2013, 12, 04}, {11, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {16, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 04}, {21, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 05}, {2, 20, 5}}, "Europe/London"),
+      ]},
+      
+      {"every 5 days", [
+        Timex.to_datetime({{2013, 12, 09}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 14}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 19}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 24}, {06, 20, 5}}, "Europe/London"),
+      ]},
+      
+      {"every 5 weeks", [
+        Timex.to_datetime({{2014, 01, 08}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 02, 12}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 03, 19}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 04, 23}, {06, 20, 5}}, "Europe/London"),
+      ]},
+      
+      {"every 2 months", [
+        Timex.to_datetime({{2014, 02, 04}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 04, 04}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 06, 04}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2014, 08, 04}, {06, 20, 5}}, "Europe/London"),
+      ]},
+      
+      {"every 3 years", [
+        Timex.to_datetime({{2016, 12, 04}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2019, 12, 04}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2022, 12, 04}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2025, 12, 04}, {06, 20, 5}}, "Europe/London"),
+      ]},
       
       {"every tuesday at midnight", [
         Timex.to_datetime({{2013, 12, 10}, {0, 0, 0}}, "Europe/London"),
@@ -224,20 +192,98 @@ defmodule HumanTime.RepeatingTest do
     # 29 30 31
     
     from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
-    until = Timex.shift(from, years: 1)
+    until = Timex.shift(from, years: 20)
     
     for {input_string, expected} <- values do
-      results = input_string
-      |> HumanTime.repeating!(from: from, until: until)
-      |> Stream.take(Enum.count(expected))
-      |> Enum.to_list
-      
-      assert Enum.count(results) == Enum.count(expected), message: "Error with: #{input_string}, different number of results vs expected, expected #{Enum.count(expected)}, got #{Enum.count(results)}"
-      
-      for {expected_item, result_item} <- Enum.zip([expected, results]) do
-        assert expected_item == result_item, message: "Error with: #{input_string}, expected #{expected_item}, got #{result_item}"
+      case HumanTime.repeating(input_string, from: from, until: until) do
+        {:ok, parse_result} ->
+          time_results = parse_result
+          |> Stream.take(Enum.count(expected))
+          |> Enum.to_list
+
+          assert Enum.count(time_results) == Enum.count(expected), message: "Error with: #{input_string}, different number of time_results vs expected, expected #{Enum.count(expected)}, got #{Enum.count(time_results)}"
+
+          for {{expected_item, result_item}, idx} <- Enum.with_index(Enum.zip([expected, time_results])) do
+            assert expected_item == result_item, message: "Error with: #{input_string}, expected #{expected_item}, got #{result_item} as item ##{idx+1}"
+          end
+
+        {:error, "No match found"} ->
+          flunk "No match found for '#{input_string}'"
       end
+    end
+  end
+  
+  test "no match" do
+    assert_raise RuntimeError, fn ->
+      "no match found!"
+      |> HumanTime.repeating!
+    end
+  end
+  
+  # We are using a genserver without a supervisor in the every other mapper
+  # this test is to ensure we can have two operating at the same time
+  test "concurrency" do
+    from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
+    until = Timex.shift(from, years: 1)
+    
+    stream1 = "every other tuesday at midnight"
+    |> HumanTime.repeating!(from: from, until: until)
+    
+    stream2 = "every other wednesday at midnight"
+    |> HumanTime.repeating!(from: from, until: until)
+    |> Stream.take(3)
+    
+    # We've run some of the 2nd stream, lets ensure 1 is still good
+    stream1
+    |> Stream.take(2)
+    
+    results1 = stream1
+    |> Enum.to_list
+    
+    results2 = stream2
+    |> Enum.to_list
+    
+    expected1 = [
+      Timex.to_datetime({{2013, 12, 10}, {0, 0, 0}}, "Europe/London"),
+      Timex.to_datetime({{2013, 12, 24}, {0, 0, 0}}, "Europe/London"),
+    ]
+    
+    expected2 = [
+      Timex.to_datetime({{2013, 12, 4}, {0, 0, 0}}, "Europe/London"),
+      Timex.to_datetime({{2013, 12, 18}, {0, 0, 0}}, "Europe/London"),
+      Timex.to_datetime({{2014, 1, 1}, {0, 0, 0}}, "Europe/London"),
+    ]
+    
+    # Test first stream
+    for {expected_item, result_item} <- Enum.zip([expected1, results1]) do
+      assert expected_item == result_item, message: "Error with: first stream, expected #{expected_item}, got #{result_item}"
+    end
+    
+    # Test second stream
+    for {expected_item, result_item} <- Enum.zip([expected2, results2]) do
+      assert expected_item == result_item, message: "Error with: first stream, expected #{expected_item}, got #{result_item}"
+    end
+  end
+  
+  test "compile regexs" do
+    values = [
+      {
+        "(basic regex)",
+        "basic regex string",
+        "no match"
+      },
+      {
+        "(#SELECTOR_NAMES#)",
+        "first",
+        "midday"
+      },
+    ]
+    
+    for {pattern, has_match, no_match} <- values do
+      regex = HumanTime.Common.Consts.create_pattern(pattern)
       
+      assert Regex.run(regex, has_match) != nil
+      assert Regex.run(regex, no_match) == nil
     end
   end
 end

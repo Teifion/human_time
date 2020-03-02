@@ -79,7 +79,6 @@ defmodule HumanTime.Repeating.Filters do
       # Is today the date we find to be acceptable?
       Enum.at(xs_in_month, selector_index) == the_date |> Timex.to_date
     end
-    
   end
   
   @spec day_number_in_month(map) :: (DateTime.t -> DateTime.t | nil)

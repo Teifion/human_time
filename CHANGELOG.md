@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.1
+ - Added repeating option for N of unit X, e.g. "5 months"
+
 ## 0.2.0
  - Existing functionality is now called "repeadetly"
  - Added new set of functionality called "relative"

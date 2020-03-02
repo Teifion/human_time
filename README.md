@@ -1,9 +1,5 @@
 # HumanTime
-[![Coverage Status](https://coveralls.io/repos/github/Teifion/human_time/badge.svg?branch=master)](https://coveralls.io/github/Teifion/human_time?branch=master)
-
-Adapted from my [human_time library for Python](https://github.com/Teifion/human_time_py) but for Elixir. Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "every friday at 2pm" and convert it into a sequence of date times as allowed by the string.
-
-This is my first attempt at putting a package onto hex so please feel free to give input on what should be changed but also be mindful I'm unlikely to have experience doing everything suggested.
+Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "every friday at 2pm" and convert it into a sequence of date times as allowed by the string. Adapted from my [human_time library for Python](https://github.com/Teifion/human_time_py).
 
 ## Usage
 Human Time can parse both repeating intervals (e.g. "every other day") and also one off relative times (e.g. "next tuesday at 3pm").
@@ -26,6 +22,28 @@ Human Time can parse both repeating intervals (e.g. "every other day") and also 
 
 If a time is not part of the string, datetimes will be outputted as being at midnight. You can set a time such as "at 1500" or "at noon" but you can also say "at the current time" or "at this time" and it will take the time of parsing and repeat that.
 
+### Example formats - Repeating
+every 5 seconds/minutes/hours/days/weeks/months/years
+every weekday at midnight
+every weekend at 1500
+first monday of every month
+second wednesday of every month at midnight
+last Friday of every month at 9am
+15th of every month at midnight
+every other Sunday at this time
+first monday after second sunday of every month at midnight
+
+### Example formats - Relative
+5m
+15/04/2020
+2020-04-15 10:15:00
+next wednesday at 1500
+this time next friday
+week next friday at 2am
+
+
+For a more complete list of examples, check out the [relative](test/relative_test.exs) and [repeating](test/repeating_test.exs) test files.
+
 ### Options
 `from`: Dictates the date the sequence will begin from (defaults to starting from now)  
 `until`: Dictates the date the sequence will end at (defaults to never finish)
@@ -47,7 +65,7 @@ end
 
 ## Roadmap / TODO
  - Allow for combining strings with "and", e.g. "every friday and every other thursday"
- - Allow for exceptsions with "except", e.g. "every weekday except fridays"
+ - Allow for exceptions with "except", e.g. "every weekday except fridays"
  - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
  - Add time jumps such as "25th minute of every other hour"
  - Enable other generators with strings such as "every other second"

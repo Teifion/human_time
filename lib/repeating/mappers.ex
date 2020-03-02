@@ -64,4 +64,22 @@ defmodule HumanTime.Repeating.Mappers do
       end
     end
   end
+  
+  @spec every_x(map) :: fun
+  def every_x(map) do
+    {:ok, state_pid} = State.start_link(-1)
+    period_amount = StringLib.parse_int(map["repeat_amount"])
+
+    fn the_date ->
+      counter = State.get(state_pid) + 1
+
+      if counter == period_amount do
+        State.set(state_pid, 0)
+        the_date
+      else
+        State.set(state_pid, counter)
+        nil
+      end
+    end
+  end
 end

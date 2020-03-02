@@ -2,13 +2,6 @@ defmodule HumanTime.RelativeTest do
   use ExUnit.Case
   doctest HumanTime
   
-  test "no match" do
-    assert_raise RuntimeError, fn ->
-      "no match found!"
-      |> HumanTime.relative!
-    end
-  end
-  
   test "complete statements" do
     values = [
       {"5m", {{2013, 12, 4}, {06, 25, 05}}},
@@ -56,6 +49,13 @@ defmodule HumanTime.RelativeTest do
         {:error, "No match found"} ->
           flunk "No match found for '#{input_string}'"
       end
+    end
+  end
+  
+  test "no match" do
+    assert_raise RuntimeError, fn ->
+      "no match found!"
+      |> HumanTime.relative!
     end
   end
 end

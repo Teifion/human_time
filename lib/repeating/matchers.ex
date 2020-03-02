@@ -9,10 +9,67 @@ defmodule HumanTime.Repeating.Matchers do
   # Each matcher consists of a tuple of:
   # A matcher, if this matches we will test for the blocker
   # A block, if this also matches we will skip this match, this allows us to have similar but different matchers which don't overlap. If nil there is no block.
+  # The generator function
   # A list of filter functions to narrow down the dates, can be an empty list
   # A mapper function, alters the date (generally to add a time) after being filtered. If nil no change is applied.
   @matchers [
     {
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) seconds?"),
+      nil,
+      &Generators.seconds/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) minutes?"),
+      nil,
+      &Generators.minutes/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) hours?"),
+      nil,
+      &Generators.hours/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) days?"),
+      nil,
+      &Generators.days/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) weeks?"),
+      nil,
+      &Generators.weeks/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) months?"),
+      nil,
+      &Generators.months/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
+      # N X, where N is a number and X is a unit of time
+      # 5 seconds
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) years?"),
+      nil,
+      &Generators.years/1,
+      [],
+      [&Mappers.every_x/1]
+    },{
       # X1 Y1 after X2 Y2 of month
       # first monday after second sunday of month
       Consts.create_pattern("(?P<selector1>#SELECTOR_NAMES#) (?P<principle1>#DAY_NAMES#) after (?P<selector2>#SELECTOR_NAMES#) (?P<principle2>#DAY_NAMES#) of (?P<ITERATOR>#ITERATORS#) month"),

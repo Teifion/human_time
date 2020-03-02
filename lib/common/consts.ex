@@ -22,8 +22,10 @@ defmodule HumanTime.Common.Consts do
   @time_12h "(?P<hour12>[0-9]|1[0-2])(:(?P<minute12>[0-5][0-9]))?(?P<period>am|pm)"
   @time_24h "(?P<hour24>[01]?[0-9]|2[0-3]):?(?P<minute24>[0-5][0-9])(:(?P<second>[0-5][0-9]))?"
   @time_all "(?:#{@time_12h}|#{@time_24h}|#{@time_term}|#{@time_current})"
-  
-  
+
+  @amount "[0-9]+"
+  @period "(second|minute|hour|day|week|month|year)"
+
   @time_term_compiled @time_term |> Regex.compile!
   @time_current_compiled @time_current |> Regex.compile!
   @time_12h_compiled @time_12h |> Regex.compile!
@@ -57,6 +59,8 @@ defmodule HumanTime.Common.Consts do
     |> String.replace("#AMOUNT#", @amounts)
     |> String.replace("#RELATIVE_NAME#", @relative_name)
     |> String.replace("#RELATIVE_ADJUSTER#", @relative_adjuster)
+    |> String.replace("#AMOUNT#", @amount)
+    |> String.replace("#PERIOD#", @period)
     |> Regex.compile!
   end
   

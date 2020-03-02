@@ -13,6 +13,28 @@ defmodule HumanTime.Repeating.Generators do
   @spec days(DateTime.t) :: DateTime.t
   def days(now), do: Timex.shift(now, days: 1)
   
+  @spec weeks(DateTime.t) :: DateTime.t
+  def weeks(now), do: Timex.shift(now, days: 7)
+  
+  @spec months(DateTime.t) :: DateTime.t
+  def months(now), do: Timex.shift(now, months: 1)
+  
+  @spec years(DateTime.t) :: DateTime.t
+  def years(now), do: Timex.shift(now, years: 1)
+  # def years(now) do
+  #   IO.puts "Now"
+  #   IO.inspect now
+  #   IO.puts ""
+    
+  #   y = Timex.shift(now, years: 1)
+    
+  #   IO.puts "Shift"
+  #   IO.inspect y
+  #   IO.puts ""
+    
+  #   y
+  # end
+  
   # def while_function(nil), do: fn _ -> true end
   @spec while_function(DateTime.t) :: fun
   def while_function(until) do
