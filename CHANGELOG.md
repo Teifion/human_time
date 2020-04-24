@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.2
+ - Fixed bug where time before date would get seen as just the date
+
 ## 0.2.1
  - Added repeating option for N of unit X, e.g. "5 months"
 

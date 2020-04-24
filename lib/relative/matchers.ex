@@ -35,6 +35,12 @@ defmodule HumanTime.Relative.Matchers do
       &Mappers.x_weeks/2
     },
     
+    {
+      Consts.create_pattern("(?P<time>#TIME_ALL#) (?P<date>#DATE#)"),
+      nil,
+      &Mappers.set_value/2
+    },
+
     # Date parsing
     {
       Consts.create_pattern("(?P<date>#DATE#)((?: at)? (?P<time>#TIME_ALL#))?"),
