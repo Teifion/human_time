@@ -54,7 +54,7 @@ To add Human Time to your project, you only need to add it as a dependency and s
 ```elixir
 def deps do
   [
-    {:human_time, "~> 0.2.1"}
+    {:human_time, "~> 0.2.3"}
   ]
 end
 

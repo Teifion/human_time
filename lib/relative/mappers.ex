@@ -4,7 +4,11 @@ defmodule HumanTime.Relative.Mappers do
   alias HumanTime.Common.Consts
   alias HumanTime.Common.StringLib
   alias HumanTime.Common.TimeLib
-  
+
+  def no_change(_match, from) do
+    {:ok, from}
+  end
+
   def x_minutes(match, from) do
     amount = match["amount"]
     |> StringLib.convert_amount

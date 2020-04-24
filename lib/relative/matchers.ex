@@ -61,6 +61,14 @@ defmodule HumanTime.Relative.Matchers do
       nil,
       &Mappers.relative_by_date/2
     },
+
+    # Constant names
+    {
+      # Now
+      Consts.create_pattern("^now$"),
+      nil,
+      &Mappers.no_change/2
+    },
   ]
   
   @spec get_matchers() :: list

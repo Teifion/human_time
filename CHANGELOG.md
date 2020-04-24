@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.2.3
+ - Added following handlers for relative: now
+
 ## 0.2.2
  - Fixed bug where time before date would get seen as just the date
 
