@@ -1,11 +1,11 @@
 defmodule HumanTime.Repeating.Matchers do
   @moduledoc false
-  
+
   alias HumanTime.Common.Consts
   alias HumanTime.Repeating.Filters
   alias HumanTime.Repeating.Mappers
   alias HumanTime.Repeating.Generators
-  
+
   # Each matcher consists of a tuple of:
   # A matcher, if this matches we will test for the blocker
   # A block, if this also matches we will skip this match, this allows us to have similar but different matchers which don't overlap. If nil there is no block.
@@ -16,7 +16,7 @@ defmodule HumanTime.Repeating.Matchers do
     {
       # N X, where N is a number and X is a unit of time
       # 5 seconds
-      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) seconds?"),
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) ?(s|sec|second|secs|seconds)$"),
       nil,
       &Generators.seconds/1,
       [],
@@ -24,7 +24,7 @@ defmodule HumanTime.Repeating.Matchers do
     },{
       # N X, where N is a number and X is a unit of time
       # 5 seconds
-      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) minutes?"),
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) ?(m|min|minute|mins|minutes)$"),
       nil,
       &Generators.minutes/1,
       [],
@@ -32,7 +32,7 @@ defmodule HumanTime.Repeating.Matchers do
     },{
       # N X, where N is a number and X is a unit of time
       # 5 seconds
-      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) hours?"),
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) ?(h|hour|hours)$"),
       nil,
       &Generators.hours/1,
       [],
@@ -40,7 +40,7 @@ defmodule HumanTime.Repeating.Matchers do
     },{
       # N X, where N is a number and X is a unit of time
       # 5 seconds
-      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) days?"),
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) ?(d|day|days)$"),
       nil,
       &Generators.days/1,
       [],
@@ -48,7 +48,7 @@ defmodule HumanTime.Repeating.Matchers do
     },{
       # N X, where N is a number and X is a unit of time
       # 5 seconds
-      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) weeks?"),
+      Consts.create_pattern("(?P<repeat_amount>#AMOUNT#) ?(w|week|weeks)$"),
       nil,
       &Generators.weeks/1,
       [],

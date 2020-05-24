@@ -11,6 +11,12 @@ defmodule HumanTime.Relative.Matchers do
   @matchers [
     # Relative amount shorthand
     {
+      # Xs, Xseconds
+      Consts.create_pattern("(?P<amount>#AMOUNT#) ?(s|sec|second|secs|seconds)$"),
+      nil,
+      &Mappers.x_seconds/2
+    },
+    {
       # Xm, Xminutes
       Consts.create_pattern("(?P<amount>#AMOUNT#) ?(m|min|minute|mins|minutes)$"),
       nil,
@@ -60,6 +66,13 @@ defmodule HumanTime.Relative.Matchers do
       Consts.create_pattern("(?P<adjuster>#RELATIVE_ADJUSTER# )?(?P<day_name>#ALL_DAY_NAMES#)( at (?P<time>#TIME_ALL#))?"),
       nil,
       &Mappers.relative_by_date/2
+    },
+    
+    # CRON
+    {
+      Consts.create_pattern("(?P<minute>[^ ]+) (?P<hour>[^ ]+) (?P<day>[^ ]+) (?P<month>[^ ]+) (?P<dow>[^ ]+)"),
+      nil,
+      &Mappers.cron/2
     },
 
     # Constant names

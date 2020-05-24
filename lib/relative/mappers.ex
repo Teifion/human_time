@@ -9,6 +9,13 @@ defmodule HumanTime.Relative.Mappers do
     {:ok, from}
   end
 
+  def x_seconds(match, from) do
+    amount = match["amount"]
+    |> StringLib.convert_amount
+
+    {:ok, Timex.shift(from, seconds: amount)}
+  end
+
   def x_minutes(match, from) do
     amount = match["amount"]
     |> StringLib.convert_amount
@@ -83,4 +90,26 @@ defmodule HumanTime.Relative.Mappers do
     end
   end
   
+  def cron(match, from) do
+    new_time = cond do
+      match["minute"] == "*" ->
+        Timex.shift(from, minutes: 1)
+      match["hour"] == "*" ->
+        from
+        |> Timex.shift(hours: 1)
+        |> Timex.set([minute: match["minute"]])
+
+      match["day"] == "*" ->
+        Timex.shift(from, days: 1)
+      match["month"] == "*" ->
+        Timex.shift(from, months: 1)
+
+      # TODO handle days of the week
+      # match["hour"] == "*" ->
+      #   Timex.shift(from, hours: 1)
+    end
+    |> Timex.set([second: 0])
+    
+    {:ok, new_time}
+  end
 end

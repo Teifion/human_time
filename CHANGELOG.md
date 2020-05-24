@@ -1,7 +1,8 @@
 # Change Log
 
 ## 0.2.3
- - Added following handlers for relative: now
+ - Added following handlers for repeating: X seconds
+ - Added following handlers for relative: "now", "In a hour", "In an hour"
 
 ## 0.2.2
  - Fixed bug where time before date would get seen as just the date

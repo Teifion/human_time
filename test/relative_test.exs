@@ -4,6 +4,7 @@ defmodule HumanTime.RelativeTest do
   
   test "complete statements" do
     values = [
+      {"5s", {{2013, 12, 4}, {06, 20, 10}}},
       {"5m", {{2013, 12, 4}, {06, 25, 05}}},
       {"5h", {{2013, 12, 4}, {11, 20, 05}}},
       {"5d", {{2013, 12, 9}, {06, 20, 05}}},
@@ -13,6 +14,8 @@ defmodule HumanTime.RelativeTest do
       {"2013-11-4", {{2013, 11, 4}, {0, 0, 0}}},
 
       {"now", {{2013, 12, 4}, {06, 20, 05}}},
+      {"In an hour", {{2013, 12, 4}, {07, 20, 05}}},
+      {"In 5 minutes", {{2013, 12, 4}, {06, 25, 05}}},
 
       {"13:43:59 24/11/2013", {{2013, 11, 24}, {13, 43, 59}}},
 
@@ -29,6 +32,8 @@ defmodule HumanTime.RelativeTest do
       {"this time next friday", {{2013, 12, 13}, {06, 20, 05}}},
       {"week friday", {{2013, 12, 13}, {06, 20, 05}}},
       {"week next friday at 2am", {{2013, 12, 20}, {2, 0, 0}}},
+
+      {"* * * * *", {{2013, 12, 4}, {06, 21, 0}}},
     ]
     
     # A calendar of December 2013 (the month this date falls into)

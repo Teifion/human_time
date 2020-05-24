@@ -3,6 +3,15 @@ defmodule HumanTime do
   Human Time is a function to convert a string such as "every other tuesday", "every weekday" or "next friday at 2pm" and convert it into a one or a sequence of date times as allowed by the string.
   """
 
+  # TODO: Add in cron-tab formatting (for repeating stuff)
+  # Some specific examples that demonstrate the full range of expressions:
+
+  #   0 * * * * — The first minute of every hour
+  #   */15 9-17 * * * — Every fifteen minutes during standard business hours
+  #   0 0 * DEC * — Once a day at midnight during december
+  #   0 7-9,4-6 13 * FRI — Once an hour during both rush hours on Friday the 13th
+
+
   alias HumanTime.Repeating
   alias HumanTime.Relative
 
