@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.2.4
+ - Added support for every Xth (e.g. every third) as a skip function
+ - Added test for "Every other hour" but currently fails
+ - TODO- add option for spaces between 5 and pm
+
 ## 0.2.3
  - Added following handlers for repeating: X seconds
  - Added following handlers for relative: "now", "In a hour", "In an hour"

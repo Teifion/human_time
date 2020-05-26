@@ -33,6 +33,9 @@ defmodule HumanTime do
       #=>   #DateTime<2018-08-22 15:30:00.848218Z>,
       #=>   #DateTime<2018-08-29 15:30:00.848218Z>
       #=> ]
+      
+  ## Error result is:
+    {:error, message}
   """
   @spec repeating(String.t(), [term]) :: {:ok, Enumerable.t} | {:error, String.t}
   def repeating(timestring, opts \\ []) do
@@ -41,7 +44,7 @@ defmodule HumanTime do
 
     while_function = Repeating.Generators.while_function(until)
     result = Repeating.Parser.build_functions(timestring)
-
+    
     case result do
       {:error, msg} -> {:error, msg}
       {:ok, {generator_function, filter_function, mapper_function}} ->
@@ -75,6 +78,9 @@ defmodule HumanTime do
       HumanTime.relative("Next wednesday at 1530")
 
       #=> {:ok, #DateTime<2018-08-15 15:30:00.848218Z>}
+      
+  ## Error result is:
+    {:error, message}
   """
   @spec relative(String.t(), [term]) :: {:ok, DateTime.t} | {:error, String.t}
   def relative(timestring, opts \\ []) do

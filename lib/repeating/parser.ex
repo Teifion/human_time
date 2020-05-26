@@ -26,7 +26,7 @@ defmodule HumanTime.Repeating.Parser do
         true
       end
     end)
-    |> Enum.map(fn {_, _, generator, filter_functions, mapper_functions, regex_result} ->
+    |> Enum.map(fn {_pattern, _blocker, generator, filter_functions, mapper_functions, regex_result} ->
       {generator, filter_functions, mapper_functions, regex_result}
     end)
     |> compose

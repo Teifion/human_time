@@ -10,7 +10,8 @@ defmodule HumanTime.Common.Consts do
   @relative_name "(today|tomorrow|yesterday)"
   @relative_adjuster "(this|next|last|week this|week next|week)"
   @amounts "([0-9]+|one|two|three|four|five|six|seven|eight|nine|ten|\\ba\\b|\\ban\\b)"
-  @iterators "every|every other"
+  @iterators "every|every (?:other|second|third|fourth|fifth|fith|sixth)"
+  @skips "other|second|third|fourth|fifth|fith|sixth"
   
   @sep "[-/]"
   @dmy_date "((?<dmy_d>[0-9]{1,2})#{@sep}(?<dmy_m>[0-9]{1,2})#{@sep}(?<dmy_y>[0-9]{2,4}))"
@@ -59,6 +60,7 @@ defmodule HumanTime.Common.Consts do
     |> String.replace("#RELATIVE_NAME#", @relative_name)
     |> String.replace("#RELATIVE_ADJUSTER#", @relative_adjuster)
     |> String.replace("#PERIOD#", @period)
+    |> String.replace("#SKIPS#", @skips)
     |> Regex.compile!
   end
   

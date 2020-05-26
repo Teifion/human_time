@@ -49,17 +49,31 @@ defmodule HumanTime.Repeating.Mappers do
     end
   end
   
-  @spec every_other(map) :: fun
-  def every_other(_) do
-    {:ok, state_pid} = State.start_link(true)
-    
+  @spec every_skip(map) :: fun
+  def every_skip(map) do
+    count_from = case map["skip"] do
+      "other" -> 2
+      "second" -> 2
+      "third" -> 3
+      "fourth" -> 4
+      "fifth" -> 5
+      "fith" -> 5
+      "sixth" -> 6
+    end
+
+    # If we start it from 1 then the first instance
+    # it comes across will trigger, there is a debate we
+    # start from count_from
+    {:ok, state_pid} = State.start_link(1)
+
     fn the_date ->
-      flag = State.get(state_pid)
-      State.set(state_pid, not flag)
-      
-      if flag do
+      counter = State.get(state_pid)
+
+      if counter == 1 do
+        State.set(state_pid, count_from)
         the_date
       else
+        State.set(state_pid, counter - 1)
         nil
       end
     end

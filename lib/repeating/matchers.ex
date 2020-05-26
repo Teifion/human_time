@@ -133,11 +133,11 @@ defmodule HumanTime.Repeating.Matchers do
     
     # Every other, this needs to be at the end of the list or it may 
     {
-      Consts.create_pattern("other .*"),
+      Consts.create_pattern("every (?P<skip>#SKIPS#)"),
       nil,
       nil,
       [],
-      [&Mappers.every_other/1]
+      [&Mappers.every_skip/1]
     },
   ]
   

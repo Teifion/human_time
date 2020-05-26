@@ -139,11 +139,24 @@ defmodule HumanTime.RepeatingTest do
         Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
       ]},
 
-      {["every other Sunday at current time"], [
+      {["every other Sunday at current time", "every second Sunday at current time"], [
         Timex.to_datetime({{2013, 12, 8}, {6, 20, 5}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 22}, {6, 20, 5}}, "Europe/London"),
         Timex.to_datetime({{2014, 1, 5}, {6, 20, 5}}, "Europe/London"),
         Timex.to_datetime({{2014, 1, 19}, {6, 20, 5}}, "Europe/London"),
+      ]},
+
+      {["every Monday at this time"], [
+        Timex.to_datetime({{2013, 12, 9}, {6, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 16}, {6, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
+      ]},
+
+      {["every other hour"], [
+        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
       ]},
 
       {["15th of every month at this time"], [
@@ -193,7 +206,7 @@ defmodule HumanTime.RepeatingTest do
     
     from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
     until = Timex.shift(from, years: 20)
-    
+
     for {string_list, expected} <- values do
       for input_string <- string_list do
         case HumanTime.repeating(input_string, from: from, until: until) do
