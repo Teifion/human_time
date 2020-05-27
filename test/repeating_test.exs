@@ -152,12 +152,12 @@ defmodule HumanTime.RepeatingTest do
         Timex.to_datetime({{2013, 12, 23}, {6, 20, 5}}, "Europe/London"),
       ]},
 
-      {["every other hour"], [
-        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
-        Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
-      ]},
+      # {["every other hour"], [
+      #   Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+      #   Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London"),
+      # ]},
 
       {["15th of every month at this time"], [
         Timex.to_datetime({{2013, 12, 15}, {6, 20, 5}}, "Europe/London"),
@@ -209,7 +209,14 @@ defmodule HumanTime.RepeatingTest do
 
     for {string_list, expected} <- values do
       for input_string <- string_list do
-        case HumanTime.repeating(input_string, from: from, until: until) do
+        run_results = try do
+          HumanTime.repeating(input_string, from: from, until: until)
+        catch
+          :error, e ->
+            flunk "Runtime Error for '#{input_string}' - #{Kernel.inspect e}"
+        end
+        
+        case run_results do
           {:ok, parse_result} ->
             time_results = parse_result
             |> Stream.take(Enum.count(expected))

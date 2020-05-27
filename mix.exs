@@ -10,6 +10,7 @@ defmodule HumanTime.MixProject do
       elixir: "~> 1.6",
       description: description(),
       package: package(),
+      dialyzer: dialyzer(),
       deps: deps(),
       docs: docs(),
       test_coverage: [tool: ExCoveralls],
@@ -39,8 +40,15 @@ defmodule HumanTime.MixProject do
       source_url: "https://github.com/teifion/human_time",
       extras: []
     ]
-end
-  
+  end
+
+  defp dialyzer do
+    [
+      plt_core_path: "priv/plts",
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+    ]
+  end
+
   defp package do
     [ files: ["lib", "mix.exs", "README.md", "LICENSE.md"],
       maintainers: ["Teifion Jordan"],
