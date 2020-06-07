@@ -3,6 +3,7 @@ defmodule HumanTime.Repeating.Parser do
   
   alias HumanTime.Common.StringLib
   alias HumanTime.Repeating.Matchers
+  require Logger
   
   @doc """
   Run the timestring through each filter pattern
@@ -10,12 +11,18 @@ defmodule HumanTime.Repeating.Parser do
   """
   @spec build_functions(String.t()) :: {:ok, {fun, fun, fun}} | {:error, String.t}
   def build_functions(timestring) do
+    # Logger.debug "Calling build_functions with timestring: '#{timestring}'"
     timestring = StringLib.clean(timestring)
+    # Logger.debug "Cleaned timestring: '#{timestring}'"
     
     Matchers.get_matchers()
-    |> Enum.map(fn {pattern, blocker, generator, filter_functions, mapper_functions} ->
+    |> Enum.map(fn {_name, pattern, blocker, generator, filter_functions, mapper_functions} ->
       regex_result = Regex.named_captures(pattern, timestring)
-      
+
+      if regex_result do
+        # Logger.debug "Matched with #{name}, result: #{Kernel.inspect regex_result}"
+      end
+
       {pattern, blocker, generator, filter_functions, mapper_functions, regex_result}
     end)
     |> Enum.filter(fn {_, _, _, _, _, regex_result} -> regex_result != nil end)
@@ -36,13 +43,26 @@ defmodule HumanTime.Repeating.Parser do
   defp compose([]), do: {:error, "No match found"}
   defp compose(first_pass) do
     # Build generator
-    generator_function = first_pass
-    |> Enum.map(fn {generator, _filter_functions, _, _regex_result} ->
-      generator
+    funcs = first_pass
+    |> Enum.map(fn {generator, _filter_functions, _, regex_result} ->
+      {generator, regex_result}
     end)
-    |> Enum.filter(&(&1 != nil))
+    |> Enum.filter(fn {g, _} -> g != nil end)
     |> Enum.uniq
-    |> hd
+
+    generator_function = case funcs do
+      [] -> 
+        nil
+        # Logger.debug "Error: No generator funcs for first_pass: '#{Kernel.inspect first_pass}'"
+      [{builder, regex_result} | _] ->
+        # Logger.debug "Found the following generator functions '#{Kernel.inspect funcs}'"
+        # Some generators already know what they want to use
+        # while others need to do it based on the regex result
+        case builder do
+          {func, args} -> func.(args)
+          _ -> builder.(regex_result)
+        end
+    end
 
     # Build filter function
     filter_function = first_pass

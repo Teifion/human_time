@@ -14,6 +14,7 @@ defmodule HumanTime do
 
   alias HumanTime.Repeating
   alias HumanTime.Relative
+  require Logger
 
   @doc """
   Generates a stream of datetimes for the string given.
@@ -39,6 +40,8 @@ defmodule HumanTime do
   """
   @spec repeating(String.t(), [term]) :: {:ok, Enumerable.t} | {:error, String.t}
   def repeating(timestring, opts \\ []) do
+    # Logger.debug "Calling repeating with timestring: #{timestring} and opts: #{Kernel.inspect opts}"
+    
     from = opts[:from] || Timex.now()
     until = opts[:until]
 

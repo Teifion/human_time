@@ -64,11 +64,11 @@ end
 ```
 
 ## Roadmap / TODO
- - Allow for combining strings with "and", e.g. "every friday and every other thursday"
- - Allow for exceptions with "except", e.g. "every weekday except fridays"
- - Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
- - Add time jumps such as "25th minute of every other hour"
- - Enable other generators with strings such as "every other second"
+- Add a debug mode
+- Allow for combining strings with "and", e.g. "every friday and every other thursday"
+- Allow for exceptions with "except", e.g. "every weekday except fridays"
+- Optimise the function calls, some of the filters will iterate through every day in a month for every day in a month
+- Add time jumps such as "25th minute of every other hour"
 
 
 ## License

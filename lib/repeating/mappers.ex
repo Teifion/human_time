@@ -5,16 +5,17 @@ defmodule HumanTime.Repeating.Mappers do
   alias HumanTime.Common.StringLib
   alias HumanTime.Common.TimeLib
   alias HumanTime.Repeating.State
+  require Logger
   
   @spec apply_time(map) :: fun
   def apply_time(match) do
     {time_type, regex_result} = match["applicant"]
     |> TimeLib.match_time
-    
+
     case time_type do
       :time_12h ->
         period_alteration = if regex_result["period"] == "pm", do: 12, else: 0
-        
+
         opts = [
           hour: StringLib.parse_int(regex_result["hour12"]) + period_alteration,
           minute: StringLib.parse_int(regex_result["minute12"]),
@@ -24,7 +25,7 @@ defmodule HumanTime.Repeating.Mappers do
         fn the_date ->
           Timex.set(the_date, opts)
         end
-      
+
       :time_24h ->
         opts = [
           hour: StringLib.parse_int(regex_result["hour24"]),
@@ -35,20 +36,20 @@ defmodule HumanTime.Repeating.Mappers do
         fn the_date ->
           Timex.set(the_date, opts)
         end
-      
+
       :time_term ->
         opts = TimeLib.get_time_indexes[match["applicant"]]
         fn the_date ->
           Timex.set(the_date, opts)
         end
-        
+
       :time_current ->
         fn the_date -> 
           the_date
         end
     end
   end
-  
+
   @spec every_skip(map) :: fun
   def every_skip(map) do
     count_from = case map["skip"] do
@@ -59,6 +60,11 @@ defmodule HumanTime.Repeating.Mappers do
       "fifth" -> 5
       "fith" -> 5
       "sixth" -> 6
+      "seventh" -> 7
+      "eighth" -> 8
+      "ninth" -> 9
+      "tenth" -> 10
+      _ -> 1
     end
 
     # If we start it from 1 then the first instance
@@ -82,7 +88,7 @@ defmodule HumanTime.Repeating.Mappers do
   @spec every_x(map) :: fun
   def every_x(map) do
     {:ok, state_pid} = State.start_link(-1)
-    period_amount = StringLib.parse_int(map["repeat_amount"])
+    period_amount = StringLib.convert_amount(map["repeat_amount"])
 
     fn the_date ->
       counter = State.get(state_pid) + 1
