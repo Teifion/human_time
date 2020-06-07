@@ -1,9 +1,9 @@
 defmodule HumanTime.Relative.Matchers do
   @moduledoc false
-  
+
   alias HumanTime.Common.Consts
   alias HumanTime.Relative.Mappers
-  
+
   # Each matcher consists of a tuple of:
   # A matcher, if this matches we will test for the blocker
   # A block, if this also matches we will skip this match, this allows us to have similar but different matchers which don't overlap. If nil there is no block.
@@ -40,7 +40,6 @@ defmodule HumanTime.Relative.Matchers do
       nil,
       &Mappers.x_weeks/2
     },
-    
     {
       Consts.create_pattern("(?P<time>#TIME_ALL#) (?P<date>#DATE#)"),
       nil,
@@ -53,24 +52,28 @@ defmodule HumanTime.Relative.Matchers do
       nil,
       &Mappers.set_value/2
     },
-    
+
     # Relative names - e.g. yesterday
     {
       Consts.create_pattern("(?P<day_name>#RELATIVE_NAME#)( at (?P<time>#TIME_ALL#))?"),
       nil,
       &Mappers.relative_by_name/2
     },
-    
+
     # Relative date - next wednesday
     {
-      Consts.create_pattern("(?P<adjuster>#RELATIVE_ADJUSTER# )?(?P<day_name>#ALL_DAY_NAMES#)( at (?P<time>#TIME_ALL#))?"),
+      Consts.create_pattern(
+        "(?P<adjuster>#RELATIVE_ADJUSTER# )?(?P<day_name>#ALL_DAY_NAMES#)( at (?P<time>#TIME_ALL#))?"
+      ),
       nil,
       &Mappers.relative_by_date/2
     },
-    
+
     # CRON
     {
-      Consts.create_pattern("(?P<minute>[^ ]+) (?P<hour>[^ ]+) (?P<day>[^ ]+) (?P<month>[^ ]+) (?P<dow>[^ ]+)"),
+      Consts.create_pattern(
+        "(?P<minute>[^ ]+) (?P<hour>[^ ]+) (?P<day>[^ ]+) (?P<month>[^ ]+) (?P<dow>[^ ]+)"
+      ),
       nil,
       &Mappers.cron/2
     },
@@ -81,9 +84,9 @@ defmodule HumanTime.Relative.Matchers do
       Consts.create_pattern("^now$"),
       nil,
       &Mappers.no_change/2
-    },
+    }
   ]
-  
+
   @spec get_matchers() :: list
   def get_matchers(), do: @matchers
 end

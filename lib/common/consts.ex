@@ -27,7 +27,7 @@ defmodule HumanTime.Common.Consts do
   @period "(second|minute|hour|day|week|month|year)"
   @named_terms "(#{@period}|#{@day_names})"
 
-  @spec create_pattern(String.t()) :: Regex.t
+  @spec create_pattern(String.t()) :: Regex.t()
   def create_pattern(patten_string) do
     patten_string
     |> String.replace("#SELECTOR_NAMES#", @selector_names)
@@ -42,15 +42,15 @@ defmodule HumanTime.Common.Consts do
     |> String.replace("#PERIOD#", @period)
     |> String.replace("#SKIPS#", @skips)
     |> String.replace("#NAMED_TERMS#", @named_terms)
-    |> Regex.compile!
+    |> Regex.compile!()
   end
 
-  @time_term_compiled @time_term |> Regex.compile!
-  @time_current_compiled @time_current |> Regex.compile!
-  @time_12h_compiled @time_12h |> Regex.compile!
-  @time_24h_compiled @time_24h |> Regex.compile!
-  @time_all_compiled @time_all |> Regex.compile!
-  
+  @time_term_compiled @time_term |> Regex.compile!()
+  @time_current_compiled @time_current |> Regex.compile!()
+  @time_12h_compiled @time_12h |> Regex.compile!()
+  @time_24h_compiled @time_24h |> Regex.compile!()
+  @time_all_compiled @time_all |> Regex.compile!()
+
   def compiled_time_term(), do: @time_term_compiled
   def compiled_time_current(), do: @time_current_compiled
   def compiled_time_12h(), do: @time_12h_compiled
@@ -58,17 +58,17 @@ defmodule HumanTime.Common.Consts do
   def compiled_time_all(), do: @time_all_compiled
 
   @day_map %{
-    "monday"    => [1],
-    "tuesday"   => [2],
+    "monday" => [1],
+    "tuesday" => [2],
     "wednesday" => [3],
-    "thursday"  => [4],
-    "friday"    => [5],
-    "saturday"  => [6],
-    "sunday"    => [7],
-    "weekday"   => [1, 2, 3, 4, 5],
-    "weekend"   => [6, 7],
-    "day"       => [1, 2, 3, 4, 5, 6, 7],
+    "thursday" => [4],
+    "friday" => [5],
+    "saturday" => [6],
+    "sunday" => [7],
+    "weekday" => [1, 2, 3, 4, 5],
+    "weekend" => [6, 7],
+    "day" => [1, 2, 3, 4, 5, 6, 7]
   }
-  
+
   def get_day_map(), do: @day_map
 end

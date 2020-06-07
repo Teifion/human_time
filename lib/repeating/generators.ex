@@ -51,7 +51,7 @@ defmodule HumanTime.Repeating.Generators do
   end
 
   # def while_function(nil), do: fn _ -> true end
-  @spec while_function(DateTime.t) :: fun
+  @spec while_function(DateTime.t()) :: fun
   def while_function(until) do
     fn v -> Timex.compare(v, until) != 1 end
   end

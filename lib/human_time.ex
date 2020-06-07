@@ -11,19 +11,18 @@ defmodule HumanTime do
   #   0 0 * DEC * — Once a day at midnight during december
   #   0 7-9,4-6 13 * FRI — Once an hour during both rush hours on Friday the 13th
 
-
   alias HumanTime.Repeating
   alias HumanTime.Relative
   require Logger
 
   @doc """
   Generates a stream of datetimes for the string given.
-  
+
   ## Options
   `from` The datetime from when the sequence will be generated, defaults to the current time.
-  
+
   `until` The datetime when the sequence will be terminated, defaults to nil. When nil the sequence will never be terminated.
-  
+
   ## Example
       HumanTime.repeating("Every wednesday at 1530")
       |> Stream.take(3)
@@ -38,32 +37,35 @@ defmodule HumanTime do
   ## Error result is:
     {:error, message}
   """
-  @spec repeating(String.t(), [term]) :: {:ok, Enumerable.t} | {:error, String.t}
+  @spec repeating(String.t(), [term]) :: {:ok, Enumerable.t()} | {:error, String.t()}
   def repeating(timestring, opts \\ []) do
     # Logger.debug "Calling repeating with timestring: #{timestring} and opts: #{Kernel.inspect opts}"
-    
+
     from = opts[:from] || Timex.now()
     until = opts[:until]
 
     while_function = Repeating.Generators.while_function(until)
     result = Repeating.Parser.build_functions(timestring)
-    
+
     case result do
-      {:error, msg} -> {:error, msg}
+      {:error, msg} ->
+        {:error, msg}
+
       {:ok, {generator_function, filter_function, mapper_function}} ->
-        {:ok, from
-        |> Stream.iterate(generator_function)
-        |> Stream.take_while(while_function)
-        |> Stream.filter(filter_function)
-        |> Stream.map(mapper_function)
-        |> Stream.filter(&(&1 != nil))}
+        {:ok,
+         from
+         |> Stream.iterate(generator_function)
+         |> Stream.take_while(while_function)
+         |> Stream.filter(filter_function)
+         |> Stream.map(mapper_function)
+         |> Stream.filter(&(&1 != nil))}
     end
   end
 
   @doc """
   Repeats the time string and raises an exception in case of errors
   """
-  @spec repeating!(String.t(), [term]) :: Enumerable.t
+  @spec repeating!(String.t(), [term]) :: Enumerable.t()
   def repeating!(timestring, opts \\ []) do
     case repeating(timestring, opts) do
       {:ok, enumerable} -> enumerable
@@ -85,22 +87,21 @@ defmodule HumanTime do
   ## Error result is:
     {:error, message}
   """
-  @spec relative(String.t(), [term]) :: {:ok, DateTime.t} | {:error, String.t}
+  @spec relative(String.t(), [term]) :: {:ok, DateTime.t()} | {:error, String.t()}
   def relative(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
-    
+
     Relative.Parser.parse(timestring, from)
   end
 
   @doc """
   Creates the time string and raises an exception in case of errors
   """
-  @spec relative!(String.t(), [term]) :: DateTime.t
+  @spec relative!(String.t(), [term]) :: DateTime.t()
   def relative!(timestring, opts \\ []) do
     case relative(timestring, opts) do
       {:ok, the_datetime} -> the_datetime
       {:error, msg} -> raise msg
     end
   end
-  
 end

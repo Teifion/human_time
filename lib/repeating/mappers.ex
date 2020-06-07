@@ -1,16 +1,17 @@
 defmodule HumanTime.Repeating.Mappers do
   @moduledoc false
-  
+
   # alias HumanTime.Common.Consts
   alias HumanTime.Common.StringLib
   alias HumanTime.Common.TimeLib
   alias HumanTime.Repeating.State
   require Logger
-  
+
   @spec apply_time(map) :: fun
   def apply_time(match) do
-    {time_type, regex_result} = match["applicant"]
-    |> TimeLib.match_time
+    {time_type, regex_result} =
+      match["applicant"]
+      |> TimeLib.match_time()
 
     case time_type do
       :time_12h ->
@@ -22,6 +23,7 @@ defmodule HumanTime.Repeating.Mappers do
           second: 0,
           microsecond: {0, 0}
         ]
+
         fn the_date ->
           Timex.set(the_date, opts)
         end
@@ -33,18 +35,20 @@ defmodule HumanTime.Repeating.Mappers do
           second: StringLib.parse_int(regex_result["second"] || ""),
           microsecond: {0, 0}
         ]
+
         fn the_date ->
           Timex.set(the_date, opts)
         end
 
       :time_term ->
-        opts = TimeLib.get_time_indexes[match["applicant"]]
+        opts = TimeLib.get_time_indexes()[match["applicant"]]
+
         fn the_date ->
           Timex.set(the_date, opts)
         end
 
       :time_current ->
-        fn the_date -> 
+        fn the_date ->
           the_date
         end
     end
@@ -52,20 +56,21 @@ defmodule HumanTime.Repeating.Mappers do
 
   @spec every_skip(map) :: fun
   def every_skip(map) do
-    count_from = case map["skip"] do
-      "other" -> 2
-      "second" -> 2
-      "third" -> 3
-      "fourth" -> 4
-      "fifth" -> 5
-      "fith" -> 5
-      "sixth" -> 6
-      "seventh" -> 7
-      "eighth" -> 8
-      "ninth" -> 9
-      "tenth" -> 10
-      _ -> 1
-    end
+    count_from =
+      case map["skip"] do
+        "other" -> 2
+        "second" -> 2
+        "third" -> 3
+        "fourth" -> 4
+        "fifth" -> 5
+        "fith" -> 5
+        "sixth" -> 6
+        "seventh" -> 7
+        "eighth" -> 8
+        "ninth" -> 9
+        "tenth" -> 10
+        _ -> 1
+      end
 
     # If we start it from 1 then the first instance
     # it comes across will trigger, there is a debate we
@@ -84,7 +89,7 @@ defmodule HumanTime.Repeating.Mappers do
       end
     end
   end
-  
+
   @spec every_x(map) :: fun
   def every_x(map) do
     {:ok, state_pid} = State.start_link(-1)
