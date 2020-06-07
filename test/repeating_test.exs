@@ -86,7 +86,7 @@ defmodule HumanTime.RepeatingTest do
         Timex.to_datetime({{2013, 12, 14}, {15, 0, 0}}, "Europe/London"),
       ]},
 
-      {["every tuesday at 4:20am"], [
+      {["every tuesday at 4:20am", "every tuesday at 4:20 am"], [
         Timex.to_datetime({{2013, 12, 10}, {4, 20, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 17}, {4, 20, 0}}, "Europe/London"),
         Timex.to_datetime({{2013, 12, 24}, {4, 20, 0}}, "Europe/London"),
@@ -234,14 +234,14 @@ defmodule HumanTime.RepeatingTest do
       end
     end
   end
-  
+
   test "no match" do
     assert_raise RuntimeError, fn ->
       "no match found!"
       |> HumanTime.repeating!
     end
   end
-  
+
   # We are using a genserver without a supervisor in the every other mapper
   # this test is to ensure we can have two operating at the same time
   test "concurrency" do
@@ -313,7 +313,8 @@ defmodule HumanTime.RepeatingTest do
     # Previously some strings have been found to cause exceptions, they should
     # instead reaturn an ok or error result
     inputs = [
-      "in ten hours"
+      "arsdtarst",
+      "in ten hours",
     ]
 
     from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")

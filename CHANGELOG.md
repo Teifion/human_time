@@ -2,8 +2,8 @@
 
 ## 0.2.4
  - Added support for every Xth (e.g. every third) as a skip function
- - Added test for "Every other hour" but currently fails
- - TODO- add option for spaces between 5 and pm
+ - Added test for "Every other hour" but currently fails as I'm not sure what the correct outcome should be
+ - Added ability to have spaces between the time and 12hour cycle, e.g. "12 pm"
 
 ## 0.2.3
  - Added following handlers for repeating: X seconds
