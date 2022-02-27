@@ -27,13 +27,13 @@ defmodule HumanTime do
       HumanTime.repeating("Every wednesday at 1530")
       |> Stream.take(3)
       |> Enum.to_list
-      
+
       #=> [
       #=>   #DateTime<2018-08-15 15:30:00.848218Z>,
       #=>   #DateTime<2018-08-22 15:30:00.848218Z>,
       #=>   #DateTime<2018-08-29 15:30:00.848218Z>
       #=> ]
-      
+
   ## Error result is:
     {:error, message}
   """
@@ -83,11 +83,11 @@ defmodule HumanTime do
       HumanTime.relative("Next wednesday at 1530")
 
       #=> {:ok, #DateTime<2018-08-15 15:30:00.848218Z>}
-      
+
   ## Error result is:
-    {:error, message}
+      #=> {:error, message}
   """
-  @spec relative(String.t(), [term]) :: {:ok, DateTime.t()} | {:error, String.t()}
+  @spec relative(String.t(), [term]) :: {:ok, DateTime.t() | nil} | {:error, String.t()}
   def relative(timestring, opts \\ []) do
     from = opts[:from] || Timex.now()
 
@@ -97,7 +97,7 @@ defmodule HumanTime do
   @doc """
   Creates the time string and raises an exception in case of errors
   """
-  @spec relative!(String.t(), [term]) :: DateTime.t()
+  @spec relative!(String.t(), [term]) :: DateTime.t() | nil
   def relative!(timestring, opts \\ []) do
     case relative(timestring, opts) do
       {:ok, the_datetime} -> the_datetime

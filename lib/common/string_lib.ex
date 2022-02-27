@@ -17,7 +17,7 @@ defmodule HumanTime.Common.StringLib do
 
   # Used to convert from a string into a numrical value
   @doc false
-  @spec convert_amount(String.t()) :: Integer
+  @spec convert_amount(String.t()) :: Integer.t()
   def convert_amount("a"), do: 1
   def convert_amount("an"), do: 1
   def convert_amount("one"), do: 1

@@ -27,7 +27,8 @@ defmodule HumanTime.RelativeTest do
       {"this time next friday", {{2013, 12, 13}, {06, 20, 05}}},
       {"week friday", {{2013, 12, 13}, {06, 20, 05}}},
       {"week next friday at 2am", {{2013, 12, 20}, {2, 0, 0}}},
-      {"* * * * *", {{2013, 12, 4}, {06, 21, 0}}}
+      {"* * * * *", {{2013, 12, 4}, {06, 21, 0}}},
+      {"never", nil},
     ]
 
     # A calendar of December 2013 (the month this date falls into)
@@ -44,12 +45,14 @@ defmodule HumanTime.RelativeTest do
     from = Timex.to_datetime({{2013, 12, 4}, {06, 20, 5}}, "Europe/London")
 
     for {input_string, expected_tuple} <- values do
-      expected = Timex.to_datetime(expected_tuple, "Europe/London")
+      expected = if expected_tuple != nil do
+        Timex.to_datetime(expected_tuple, "Europe/London")
+      end
 
       case HumanTime.relative(input_string, from: from) do
         {:ok, result} ->
           assert expected == result,
-            message: "Error with: '#{input_string}, expected #{expected}, got #{result}"
+            message: "Error with: '#{input_string}, expected #{Kernel.inspect expected}, got #{Kernel.inspect result}"
 
         {:error, "No match found"} ->
           flunk("No match found for '#{input_string}'")

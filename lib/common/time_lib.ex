@@ -10,7 +10,7 @@ defmodule HumanTime.Common.TimeLib do
     "morning" => [hour: 8, minute: 0, second: 0, microsecond: {0, 0}],
     "midnight" => [hour: 0, minute: 0, second: 0, microsecond: {0, 0}]
   }
-  @spec get_time_indexes() :: list
+  @spec get_time_indexes() :: Map.t()
   def get_time_indexes(), do: @time_indexes
 
   @spec match_time(String.t()) :: {atom, Regex.t()}

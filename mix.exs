@@ -1,7 +1,7 @@
 defmodule HumanTime.MixProject do
   use Mix.Project
 
-  @version "0.2.4"
+  @version "0.3.0"
 
   def project do
     [
@@ -69,11 +69,11 @@ defmodule HumanTime.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:timex, "~> 3.6"},
-      {:excoveralls, "~> 0.8", only: :test},
-      {:dialyxir, "~> 0.4", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.19", only: :dev, runtime: false},
-      {:credo, "~> 0.5", only: [:dev, :test]}
+      {:timex, "~> 3.7.6"},
+      {:excoveralls, "~> 0.14.4", only: :test},
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.28.2", only: :dev, runtime: false},
+      {:credo, "~> 1.6.3", only: [:dev, :test]}
     ]
   end
 end

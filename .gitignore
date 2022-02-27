@@ -24,6 +24,7 @@ human_time-*.tar
 
 test/debug_test.exs
 
-
-human_time.sublime-project
-human_time.sublime-workspace
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+/zignore/
