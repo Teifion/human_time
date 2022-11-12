@@ -229,17 +229,13 @@ defmodule HumanTime.RepeatingTest do
 
             assert Enum.count(time_results) == Enum.count(expected),
               message:
-                "Error with: #{input_string}, different number of time_results vs expected, expected #{
-                  Enum.count(expected)
-                }, got #{Enum.count(time_results)}"
+                "Error with: #{input_string}, different number of time_results vs expected, expected #{Enum.count(expected)}, got #{Enum.count(time_results)}"
 
             for {{expected_item, result_item}, idx} <-
                   Enum.with_index(Enum.zip([expected, time_results])) do
               assert expected_item == result_item,
                 message:
-                  "Error with: #{input_string}, expected #{expected_item}, got #{result_item} as item ##{
-                    idx + 1
-                  }"
+                  "Error with: #{input_string}, expected #{expected_item}, got #{result_item} as item ##{idx + 1}"
             end
 
           {:error, "No match found"} ->

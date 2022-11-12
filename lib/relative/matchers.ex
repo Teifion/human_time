@@ -41,6 +41,18 @@ defmodule HumanTime.Relative.Matchers do
       &Mappers.x_weeks/2
     },
     {
+      # Xmonths
+      Consts.create_pattern("(?P<amount>#AMOUNT#) ?(month|months)$"),
+      nil,
+      &Mappers.x_months/2
+    },
+    {
+      # Xy, Xyears
+      Consts.create_pattern("(?P<amount>#AMOUNT#) ?(y|year|years)$"),
+      nil,
+      &Mappers.x_years/2
+    },
+    {
       Consts.create_pattern("(?P<time>#TIME_ALL#) (?P<date>#DATE#)"),
       nil,
       &Mappers.set_value/2

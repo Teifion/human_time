@@ -157,7 +157,7 @@ defmodule HumanTime.Repeating.Matchers do
     #   [&Mappers.remove_time/1],
     # },
 
-    # Every other, this needs to be at the end of the list or it may 
+    # Every other, this needs to be at the end of the list or it may
     {
       "every skip component",
       Consts.create_pattern("every (?P<skip>#SKIPS#)?( )?(?P<generator_component>#NAMED_TERMS#)"),

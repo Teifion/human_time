@@ -49,6 +49,22 @@ defmodule HumanTime.Relative.Mappers do
     {:ok, Timex.shift(from, weeks: amount)}
   end
 
+  def x_months(match, from) do
+    amount =
+      match["amount"]
+      |> StringLib.convert_amount()
+
+    {:ok, Timex.shift(from, months: amount)}
+  end
+
+  def x_years(match, from) do
+    amount =
+      match["amount"]
+      |> StringLib.convert_amount()
+
+    {:ok, Timex.shift(from, years: amount)}
+  end
+
   # We use the from as a starting point to preserve the timezone information
   def set_value(match, from) do
     raw = StringLib.convert_date(match)
